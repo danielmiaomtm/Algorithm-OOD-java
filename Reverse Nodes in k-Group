@@ -1,0 +1,33 @@
+public ListNode reverseKGroup(ListNode head, int k){
+        if (head == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next= head;
+        ListNode start = dummy;
+        ListNode next = dummy;
+        ListNode cur = dummy;
+        int i = 1;
+        while(cur != null) {
+            if (i % k == 0) {
+                start = helper (start, cur.next);
+                cur = start.next;
+            } else {
+                cur = cur.next;
+            }
+            i++;
+        }
+        
+        return dummy.next;
+    }
+    public ListNode void helper (TreeNode start, TreeNode end) {
+        TreeNode cur = start.next;
+        TreeNode next = cur.next;
+        while (end != next) {
+            cur.next = next.next;
+            next.next = start.next;
+            start.next = next;
+            next = cur.next;
+        }
+        return cur;
+    }

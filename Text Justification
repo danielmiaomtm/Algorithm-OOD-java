@@ -1,0 +1,64 @@
+
+// text justification    
+    public List<String> fullJustify(String[] words, int maxWidth) {
+                List<String> result = new ArrayList<>();
+        if (words.length == 0 || words == null) {
+            return result;
+        }
+        int start = 0;
+        int sum = 0;
+        for (int i = 0; i < words.length; i++) {
+            int count = words[i].length();                        
+            if (sum + count + (i - start) > maxWidth) {
+                int spaceNum = 0;
+                int extraSpaceNum = 0;
+                
+                if (i - start - 1 > 0) {
+                    spaceNum = (maxWidth - sum) / (i - start - 1);
+                    extraSpaceNum = (maxWidth - sum) % (i - start - 1);
+                }
+                
+                StringBuilder sb = new StringBuilder();
+                
+                for (int j = start; j < i; j++) {
+                        
+                    sb.append(words[j]);
+                    
+                    if (j < i - 1) {
+                        for (int k = 0; k < spaceNum; k++) {
+                            sb.append(" ");
+                        }
+                        if (extraSpaceNum > 0) {
+                            sb.append(" ");
+                        }
+                        extraSpaceNum--;   
+                    }
+                    
+                }
+                for (int j = sb.length(); j < maxWidth; j++) {
+                   sb.append(" ");   
+                }
+                result.add(sb.toString());
+                start = i;
+                sum = 0;
+            }
+            
+            sum += count;
+            
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = start; i < words.length; i++) {
+            sb.append(words[i]);
+            if (sb.length() < maxWidth) {
+                sb.append(" ");
+            }
+        }
+        
+        for (int i = sb.length(); i < maxWidth; i++) {
+            sb.append(" ");
+        }
+        
+        result.add(sb.toString());
+        return result;
+    }

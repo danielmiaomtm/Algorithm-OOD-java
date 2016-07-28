@@ -1,0 +1,45 @@
+/*
+A dictionary has lists of words, then find the maximum two length of words product that these two words do not share a common character.
+*/
+public int largestProduct(List<String> dict) {
+       Map<String, Integer> map = new HashMap<>();
+
+       for (String word : dict) {
+           int hashCode = 0;
+           for (char c : word.toCharArray()) {
+               hashCode |= 1 << (c - 'a');
+           }
+           map.put(word, hashCode);
+       }
+       
+       Collections.sort(dict, new Comparator<String>(){
+           public int compare (String s1, String s2) {
+               if (s1.length() < s2.length()) {
+                   return 1;
+               } else if (s1.length() > s2.length()) {
+                   return -1;
+               } else {
+                   return 0;
+               }
+           }
+       });
+       
+       int result = 0;
+       for (int i = 1; i < dict.size(); i++) {
+           for (int j = 0; j < i; j++) {
+               if (dict.get(i).length() * dict.get(j).length() <= result) {
+                   break;
+               }
+               
+               int l1 = map.get(dict.get(i));
+               int l2 = map.get(dict.get(j));
+               if ((l1 & l2) == 0) {
+                   result = Math.max(result, l1 * l2);
+               }
+           }
+       }
+       
+       return result;
+      
+   }
+   

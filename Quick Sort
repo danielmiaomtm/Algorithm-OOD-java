@@ -1,0 +1,58 @@
+/* package whatever; // don't place package name! */
+
+
+import java.lang.*;
+import java.util.*;
+
+class myCode {
+    public static void main (String[] args) {
+
+        
+        myCode result = new myCode();
+        int[] nums = new int[]{5,4,3,2,1};
+        result.quickSort(nums);
+        System.out.println(Arrays.toString(nums));
+   
+    } 
+    public void quickSort (int[] nums) {
+        if (nums.length <= 1 || nums == null) {
+            return;
+        }
+        helper (nums, 0, nums.length - 1);    
+    }
+    public void helper (int[] nums, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int pos = partition (nums, left, right);
+        helper (nums, left, pos - 1);
+        helper (nums, pos + 1, right);
+    }
+    public int partition (int[] nums, int left, int right) {
+        int mid = left + (right - left) / 2;
+        int pivot = nums[mid];
+        swap (nums, mid, right);
+        
+        int start = left;
+        int end = right - 1;
+        
+        while (start <= end) {
+            if (nums[start] < pivot) {
+                start++;
+            } else if (nums[end] > pivot) {
+                end--;
+            } else {
+                swap(nums, start++, end--);
+            }    
+        }    
+        swap(nums, start, right);
+        return start;
+    }
+    public void swap (int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
+
+}
+

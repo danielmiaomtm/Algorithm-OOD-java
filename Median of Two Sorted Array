@@ -1,0 +1,35 @@
+public double findMedianSortedArrays(int[] A, int[] B) {
+        // write your code here
+        int m = A.length, n = B.length;
+        int k = (m + n) / 2;
+        if ((m + n) % 2 == 0) {
+            return  (helper (A, B, 0, 0, m, n, k + 1) + helper (A, B, 0, 0, m, n, k)) * 0.5;
+        } else {
+            return helper (A, B, 0, 0, m, n, k + 1);
+        }
+    }
+    public double helper (int[] A, int[] B, int start1, int start2, int len1, int len2, int k) {
+        if (len1 > len2)  {
+            return helper (B, A, start2, start1, len2, len1, k);
+        }                     
+        
+        if (len1 == 0) {
+            return B[start2 + k - 1];
+        }
+        
+        if (k == 1) {
+            return Math.min(A[start1], B[start2]);
+        }
+                              
+        int p1 = Math.min(k / 2, len1);
+        int p2 = k - p1;
+        
+        if (A[start1 + p1 - 1] < B[start2 + p2 - 1]) {
+            return helper (A, B, start1 + p1, start2, len1 - p1, len2, k - p1);
+        } else if (A[start1 + p1 - 1] > B[start2 + p2 - 1]) {
+            return helper (A, B, start1, start2 + p2, len1, len2 - p2, k - p2);
+        } else {
+            return A[start1 + p1 - 1];
+        }
+        
+    }

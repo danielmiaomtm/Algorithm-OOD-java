@@ -1,0 +1,31 @@
+public int longest(int[] array) {
+            if (array.length <= 1 || array == null) {
+                return array.length;
+            }
+            int[] temp = new int[array.length];
+            temp[0] = array[0];
+            int left = 0;
+            for (int i = 1; i < array.length; i++) {
+                if (temp[left] < array[i]) {
+                    temp[++left] = array[i];
+                } else if (temp[0] > array[i]) {
+                    temp[0] = array[i];
+                } else {
+                    temp[binarySearch (temp, array[i], left)] = array[i];
+                }
+            }
+            return left + 1;
+        }
+        public int binarySearch (int[] temp, int target, int right) {
+            int start = 0;
+            int end = right;
+            while (start + 1 < end) {
+                int mid = start + (end - start) / 2;
+                if (temp[mid] < target) {
+                     start = mid;
+                } else if (temp[mid] >= target) {
+                    end = mid;
+                } 
+            }
+            return end;
+        }

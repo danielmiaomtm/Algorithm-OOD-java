@@ -13,18 +13,18 @@
             
         while (left < right) {    
             
-            while (nums[l] > pivot) {
+            if (nums[l] > pivot) {
                 l++;
-            }
-            while (nums[r] < pivot) {
+            } else if (nums[r] < pivot) {
                 r--;
-            }
-            if (l <= r) {
-                int temp = nums[l];
-                nums[l] = nums[r];
-                nums[r] = temp;
-                l++;
-                r--;
+            } else {
+                if (l <= r) {
+                    int temp = nums[l];
+                    nums[l] = nums[r];
+                    nums[r] = temp;
+                    l++;
+                    r--;
+                }
             }
         }
         

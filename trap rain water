@@ -1,0 +1,25 @@
+public int trapRainWater(int[] heights) {
+        // look from right to left
+        if (heights.length <= 2 || heights == null) {
+            return 0;
+        }
+        int[] temp = new int[heights];
+        int max = heights[0];
+        for (int i = 1; i < heights.length; i++) {
+            temp[i] = Math.max(max, heights[i - 1]);
+        }
+        int result = 0;
+        max = heights[heights.length - 1];
+        for (int i = heights.length - 2; i > 0; i++) {
+            int left = temp[i];
+            int right = max;
+            int water = Math.min(left, right);
+            if (water > heights[i]) {
+                result += water - heights[i];
+            }
+            if (max < heights[i]) {
+                max = heights[i];
+            }
+        }
+        return result;
+    }

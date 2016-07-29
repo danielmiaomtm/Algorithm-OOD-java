@@ -1,0 +1,31 @@
+  public TreeNode reconstruct(int[] level, int[] in) {
+    // level, in not null. no duplicates.
+    Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
+    for (int i = 0; i < in.length; i++) {
+      inMap.put(in[i], i);
+    }
+    List<Integer> lList = new ArrayList<Integer>();
+    for (int num : level) {
+      lList.add(num);
+    }
+    return helper(lList, inMap);
+  }
+
+  private TreeNode helper(List<Integer> level, Map<Integer, Integer> inMap) {
+    if (level.isEmpty()) {
+      return null;
+    }
+    TreeNode root = new TreeNode(level.remove(0));
+    List<Integer> left = new ArrayList<Integer>();
+    List<Integer> right = new ArrayList<Integer>();
+    for (int num : level) {
+      if (inMap.get(num) < inMap.get(root.key)) {
+        left.add(num);
+      } else {
+        right.add(num);
+      }
+    }
+    root.left = helper(left, inMap);
+    root.right = helper(right, inMap);
+    return root;
+  }

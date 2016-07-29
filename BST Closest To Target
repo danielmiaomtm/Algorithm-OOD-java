@@ -1,0 +1,21 @@
+public TreeNode closest(TreeNode root, int target) {
+    if (root == null) {
+      return null;
+    }
+    TreeNode result = root;
+    while (root != null) {
+      if (root.key == target) {
+        return root;
+      } else {
+        if (Math.abs(root.key - target) < Math.abs(result.key - target)) {
+          result = root;
+        }
+        if (root.key < target) {
+          root = root.right;
+        } else {
+          root = root.left;
+        }
+      }
+    }
+    return result;
+  }

@@ -1,0 +1,76 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+
+    private void copyNext(RandomListNode head) {
+        while (head != null) {
+            RandomListNode newNode = new RandomListNode(head.label);
+            newNode.random = head.random;
+            newNode.next = head.next;
+            head.next = newNode;
+            head = head.next.next;
+        }
+    }
+
+    private void copyRandom(RandomListNode head) {
+        while (head != null) {
+            if (head.next.random != null) {
+                head.next.random = head.random.next;
+            }
+            head = head.next.next;
+        }
+    }
+
+    private RandomListNode splitList(RandomListNode head) {
+        RandomListNode newHead = head.next;
+        while (head != null) {
+            RandomListNode temp = head.next;
+            head.next = temp.next;
+            head = head.next;
+            if (temp.next != null) {
+                temp.next = temp.next.next;
+            }
+        }
+        return newHead;
+    }
+
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if (head == null) {
+            return null;
+        }
+        copyNext(head);
+        copyRandom(head);
+        return splitList(head);
+    }
+
+//Method 2
+public class DeepCopyLinkedListRandom {
+  public RandomListNode copy(RandomListNode head) {
+    if (head == null) {
+      return null;
+    }
+    RandomListNode dummy = new RandomListNode(0);
+    RandomListNode cur = dummy;
+    HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+    while (head != null) {
+      if (!map.containsKey(head)) {
+        map.put(head, new RandomListNode(head.value));
+      }
+      cur.next = map.get(head);
+      if (head.random != null) {
+        if (!map.containsKey(head.random)) {
+          map.put(head.random, new RandomListNode(head.random.value));
+        }
+        cur.next.random = map.get(head.random);
+      }
+      head = head.next;
+      cur = cur.next;
+    }
+    return dummy.next;
+  }
+}

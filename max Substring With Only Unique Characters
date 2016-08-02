@@ -1,0 +1,20 @@
+public class LongestSubstringUnique {
+  public String longest(String input) {
+    // Assumptions: input is not null.
+    String result = "";
+    Set<Character> set = new HashSet<Character>();
+    int left = 0;
+    int right = 0;
+    while (right < input.length()) {
+      if (set.contains(input.charAt(right))) {
+        set.remove(input.charAt(left++));
+      } else {
+        set.add(input.charAt(right++));
+        if (right - left > result.length()) {
+          result = input.substring(left, right);
+        }
+      }
+    }
+    return result;
+  }
+}

@@ -1,0 +1,25 @@
+/*
+Remove All Leading/Trailing/Duplicate Space Characters
+exmaple : '_' means sapce 
+___h__n__l__ = n_n_l
+*/
+
+
+public String removeSpaces(String input) {
+    // input is not null.
+    if (input.isEmpty()) {
+      return input;
+    }
+    char[] array = input.toCharArray();
+    int end = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == ' ' && (i == 0 || array[i - 1] == ' ')) {
+        continue;
+      }
+      array[end++] = array[i];
+    }
+    if (end > 0 && array[end - 1] == ' ') {
+      return new String(array, 0, end - 1);
+    }
+    return new String(array, 0, end);
+  }

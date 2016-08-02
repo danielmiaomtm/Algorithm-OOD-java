@@ -1,0 +1,41 @@
+/*
+Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+For example:
+
+Given "aacecaaa", return "aaacecaaa".
+
+Given "abcd", return "dcbabcd".
+*/
+
+public String shortestPalindrome(String s) {
+
+        StringBuilder sb = new StringBuilder(s);
+        String str = s + "#" + sb.reverse().toString();
+        
+        int[] temp = new int[str.length()];
+        helper (str, temp);
+        int len = temp[temp.length - 1];
+        String preFix = s.substring(len, s.length());
+        return preFix + s;
+    }
+    public void helper (String str, int[] temp) {
+        int left = 0; 
+        int right = 1;
+        while (right < temp.length) {
+            char c = str.charAt(left);
+            char t = str.charAt(right);
+            if (c == t) {
+                temp[right] = left + 1;
+                left++;
+                right++;
+            } else {
+                if (left != 0) {
+                    left = temp[left - 1];
+                } else {
+                    temp[right] = 0;
+                    right++;
+                }
+            }
+        }
+    }

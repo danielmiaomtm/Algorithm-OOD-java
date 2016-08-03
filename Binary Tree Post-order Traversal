@@ -1,0 +1,20 @@
+public ArrayList<Integer> postorderTraversal(TreeNode root) {
+        // write your code here
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            result.add(0, cur.val);
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+        }
+        return result;
+    }

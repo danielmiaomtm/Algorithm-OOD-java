@@ -1,0 +1,18 @@
+public List<Integer> inOrder(TreeNode root) {
+    List<Integer> inorder = new ArrayList<Integer>();
+    Deque<TreeNode> stack = new LinkedList<TreeNode>();
+    TreeNode cur = root;
+    while (cur != null || !stack.isEmpty()) {
+      // always go left if applicable.
+      if (cur != null) {
+        stack.offerFirst(cur);
+        cur = cur.left;
+      } else {
+        // if can not go left, should pop top element and go right.
+        cur = stack.pollFirst();
+        inorder.add(cur.key);
+        cur = cur.right;
+      }
+    }
+    return inorder;
+  }

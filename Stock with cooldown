@@ -12,8 +12,12 @@ public int maxProfit(int[] prices) {
         buyDp[0] = -prices[0];
         sellDp[0] = 0;
         for (int i = 1; i < prices.length; i++) {
+            //对于当天最终未持股的状态，最终最大利润有两种可能，一是今天没动作跟昨天未持股状态一样，二是昨天持股了，
+            今天卖了。所以我们只要取这两者之间最大值即可，表达式如下：
             sellDp[i] = Math.max(sellDp[i - 1], buyDp[i - 1] + prices[i]);
             if (i >= 2) {
+            // 对于当天最终持股的状态，最终最大利润有两种可能，一是今天没动作跟昨天持股状态一样，二是前天还没持股，
+            今天买了股票，这里是因为cooldown的原因，所以今天买股要追溯到前天的状态。我们只要取这两者之间最大值即可，表达式如下：
                 buyDp[i] = Math.max(buyDp[i - 1], sellDp[i - 2] - prices[i]);
             } else {
                 buyDp[i] = Math.max(buyDp[i - 1], -prices[i]);

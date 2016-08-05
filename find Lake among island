@@ -1,0 +1,63 @@
+public static void main(String[] args){
+        NumberOfLakes nof = new NumberOfLakes();
+        int[][] world = {{1,1,1,0,1},{1,0,0,1,0},{1,1,1,1,1,},{0,1,1,0,1},{0,1,1,1,1}};
+        System.out.println(nof.numberOfLakes(world));
+    }
+    
+    public int numberOfLakes(int[][] world){
+        int islandId = 2;
+        for(int i = 0; i < world.length; i++){
+            for(int j = 0; j < world[0].length; j++){
+                if(world[i][j] == 1){
+                    findIsland(world, i, j, islandId);
+                    islandId++;
+                }
+            }
+        }
+        int lake = 0;
+        for(int i = 0; i < world.length; i++){
+            for(int j = 0; j < world[0].length; j++){
+                if(world[i][j] == 0){
+                    
+                    int currId = 0;
+                    if(i > 0) currId = (world[i - 1][j] != 0 ? world[i - 1][j] : currId);
+                    if(j > 0) currId = (world[i][j - 1] != 0 ? world[i][j - 1] : currId);
+                    if(i < world.length - 1) currId = (world[i + 1][j] != 0 ? world[i + 1][j] : currId);
+                    if(j < world[0].length - 1) currId = (world[i][j + 1] != 0 ? world[i][j + 1] : currId);
+                    
+                    if(findLake(world, i, j, currId)){
+                        lake++;
+                    }
+                }
+            }
+        }
+        return lake;
+    }
+    
+    private boolean findLake(int[][] world, int i, int j, int id){
+        
+        world[i][j] = id;
+        
+        boolean up = i != 0 
+                && (world[i - 1][j] == id 
+                || (world[i - 1][j] == 0 && findLake(world, i - 1, j, id)));
+        boolean down = i != world.length - 1 
+                && (world[i + 1][j] == id 
+                || (world[i + 1][j] == 0 && findLake(world, i + 1, j, id)));
+        boolean left = j != 0 
+                && (world[i][j - 1] == id 
+                || (world[i][j - 1] == 0 && findLake(world, i, j - 1, id)));
+        boolean right = j != world[0].length - 1 
+                && (world[i][j + 1] == id 
+                || (world[i][j + 1] == 0 && findLake(world, i, j + 1, id)));
+        return up && down && right && left;
+    }
+    
+    private void findIsland(int[][] world, int i, int j, int id){
+        world[i][j] = id;
+        if(i > 0 && world[i - 1][j] == 1) findIsland(world, i - 1, j, id);
+        if(j > 0 && world[i][j - 1] == 1) findIsland(world, i, j - 1, id);
+        if(i < world.length - 1 && world[i + 1][j] == 1) findIsland(world, i + 1, j, id);
+        if(j < world[0].length - 1 && world[i][j + 1] == 1) findIsland(world, i, j + 1, id);
+    }
+}

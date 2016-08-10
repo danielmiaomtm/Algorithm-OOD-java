@@ -1,0 +1,54 @@
+/*
+You have two arrays src, tgt, containing two permutations of the numbers 0..n-1. 
+You would like to rearrange src so that it equals tgt. The only allowed operations
+is “swap a number with 0”, e.g. {1,0,2,3} -> {1,3,2,0} (“swap 3 with 0”). Write a 
+program that prints to stdout the list of required operations. 
+
+Practical application: 
+Imagine you have a parking place with n slots and n-1 cars numbered from 1..n-1. 
+The free slot is represented by 0 in the problem. If you want to rearrange the cars, 
+you can only move one car at a time into the empty slot, which is equivalent to “swap a number with 0”. 
+
+Example: 
+src={1,0,2,3}; tgt={0,2,3,1};
+*/
+
+public class RearrangeArray {
+	
+	public static void rearrange(int []source, int []target) {
+		int srcIndex = -1, srcZeroIndex = -1;
+		
+		srcZeroIndex = findPosition(source, 0);
+		for (int index = 0; index < source.length; index++) {
+			if (target[index] != 0 && source[index] != target[index]){
+				swapInSource(source, srcZeroIndex, index);
+				srcZeroIndex = index;
+				srcIndex = findPosition(source, target[index]);
+				swapInSource(source, index, srcIndex);
+				srcZeroIndex = srcIndex;
+			}
+		}
+	}
+
+	private static int findPosition(int[] array, int key){
+		for (int i = 0; i < array.length; i++){
+			if (array[i] == key){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private static void swapInSource(int source[], int index1, int index2){
+		int temp = source[index1];
+		source[index1] = source[index2];
+		source[index2] = temp;
+	}
+
+	public static void main(String[] args){
+		int[] source = { 1, 0, 2, 3, 7, 4, 8, 9 };
+		int[] target = { 0, 2, 8, 3, 1, 9, 4, 7 };
+		rearrange(source, target);
+		System.out.println("Source: "+ Arrays.toString(source));
+	}
+}

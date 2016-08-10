@@ -1,0 +1,29 @@
+public static ListNode addOne(ListNode head) {
+                int pos = 0, pre = 0, index = 0;
+                ListNode node = head;
+                boolean hasCarry = false;. more info on 1point3acres.com
+                while(node != null) {
+                        if(node.val != 9) pre = 0;
+                        if(pre != 9 && node.val == 9) {
+                                pos = index;
+                                pre = 9;
+                        }
+                        if(node.next == null && node.val == 9) hasCarry = true;
+                        index++;
+                        node = node.next;
+                }        
+                if(!hasCarry) pos = index;
+                node = head;
+                index = 0;
+                while(node != null) {
+                        if(index >= pos - 1) node.val = (node.val + 1) % 10;
+                        index++;
+                        node = node.next;
+                }
+                if(hasCarry && pos == 0) {
+                        ListNode tmp = new ListNode(1);
+                        tmp.next = head;
+                        head = tmp;
+                }
+                return head;
+        }

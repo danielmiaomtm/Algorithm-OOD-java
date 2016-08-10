@@ -1,0 +1,23 @@
+/*
+For array [1, 2, 7, 7, 8], moving window size k = 3. return [7, 7, 8]
+*/
+public ArrayList<Integer> maxSlidingWindow(int[] nums, int k) {
+	ArrayList<Integer> result = new ArrayList<>();
+	if (nums.length < k || nums == null) {
+		return result;
+	}
+	Deque<Integer> deque = new LinkedList<>();
+	for (int i = 0; i < nums.length; i++) {
+		while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+			deque.removeLast();
+		}
+		deque.offer(i);
+		if (i >= k - 1) {
+			result.add(nums[deque.peekFirst]);
+		}
+		if (deque.peekFirst() == i - k) {
+			queue.pollFirst();
+		}
+	}
+	return result;
+}

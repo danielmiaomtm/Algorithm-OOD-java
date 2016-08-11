@@ -1,0 +1,54 @@
+/*
+实现这么一个函数 void longestSubstr(string s, int m). 在s中，找到最长的字串， 使其恰好含有m个distinct char.
+比如：
+
+输入 aabbccedf, 3 返回 aabbcc（含有a b c三个不同的char）
+输入 abcdbcedf，3 返回 bcdbc （含有b c d 三个）
+*/
+
+    public String longestSubstr(String s, int m) {
+        if (m <= 0) {
+            return "";
+        }
+        if (s.length() <= m || s == null) {
+            return s;
+        }
+        if (m == 1) {
+            return s.substring(0, 1);
+        }
+        
+        Map<Character, List<Integer>> map = new HashMap<>();
+        int i = 0; 
+        List<Integer> re = new ArrayList<>();
+        re.add(0);
+        map.put(s.charAt(0), re);
+        String result = new String();
+        int max = Integer.MIN_VALUE;
+        for (int j = 1; j < s.length(); j++) {
+            char c = s.charAt(j);
+            if (map.size() == m && !map.containsKey(c)) {
+                if (max < j - i) {
+                    max = j - i;
+                    result = s.substring(i, j);
+                }
+                List<Integer> list = map.get(s.charAt(i));
+                list.remove(0);
+                if (list.size() == 0) {
+                    map.remove(s.charAt(i));
+                } else {
+                    map.put(s.charAt(i), list);    
+                }
+                i++;
+            } 
+            
+                if (map.containsKey(c)) {
+                    map.get(c).add(j);
+                } else {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(j);
+                    map.put(c, list);
+                }
+        }
+        return result;
+    }
+    

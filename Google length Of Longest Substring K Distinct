@@ -1,0 +1,31 @@
+public int lengthOfLongestSubstringKDistinct(String s, int k) { 
+        if (k <= 0 || s.length() == 0 || s == null || s.length() < k) {
+            return 0;
+        }
+
+        Map<Character, Integer> map = new HashMap<>();
+        map.put(s.charAt(0), 1);
+        int i = 0; 
+        int result = Integer.MIN_VALUE;
+        for (int j = 1; j < s.length(); j++) {
+            char c = s.charAt(j);
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            } else {
+                map.put(c, 1);
+                
+                if (map.size() > k ) {
+                    result = Math.max(result, j - i);
+                    while (map.size() > k) {
+                        map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
+                        if (map.get(s.charAt(i)) == 0) {
+                            map.remove(s.charAt(i));
+                        }
+                        i++; 
+                    }
+                }
+  
+            }
+        }
+        return result == Integer.MIN_VALUE ? -1 : result;
+    }

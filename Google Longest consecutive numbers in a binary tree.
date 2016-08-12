@@ -1,0 +1,24 @@
+public int[] LongestConsecutiveNumber (TreeNode root) {
+  if (root == null) {
+    return list.toArray(new int[]);
+  }
+  TreeNode min = root;
+  int len = helper (root, root.val - 1, 0, min);
+  int[] result = new int[len];
+  for (int i = 0; i < len; i++) {
+    result[i] = min.val + i;
+  }
+  return result;
+}
+public int helper (TreeNode root, int preVal, int len, TreeNode min) {
+  if (root == null) {
+    return len;
+  }
+  if (root.val == preVal + 1) {
+    curLen = len + 1;
+  } else {
+    min = root;
+    curLen = 1;
+  }
+  return Math.max(curlen, Math.max(helper(root.left, root.val, curLen, min), helper(root.right, root.val, curLen, min));
+}

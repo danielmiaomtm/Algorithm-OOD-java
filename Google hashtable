@@ -1,0 +1,46 @@
+import java.util.Random;
+
+public class RandomizedSet {
+	Map<Integer, Integer> map1;
+	Map<Integer, Integer> map2;
+	Random rand;
+ 	public RandomizedSet() {
+ 		map1 = new HashMap<>();
+ 		map2 = new HashMap<>();
+ 		rand = new Random(System.currentTimeMillis());
+	}
+	public boolean insert(int val) {
+		if (map1.containsKey(val)) {
+			return false;
+		}
+		map1.put(val, map1.size());
+		map2.put(map2.size(). val);
+		return true;
+	}
+	public boolean remove(int val) {
+		if (!map1.containsKey(val)) {
+			return false;
+		}
+		int index = map1.get(val);
+		map1.remove(val);
+		map2.remove(index);
+		if (map1.size() == 0 || map1.size() == index) {
+			return true;
+		}
+
+		int nextInt = map2.get(map2.size());
+		map1.put(nextInt, index);
+		map2.remove(map2.size());
+		map2.(index, nextInt);
+		return true;
+	}
+	public int getRandom () {
+		if (map1.size() == 0) {
+			return -1;
+		}
+		if (map1.size() == 1) {
+			return map2.get(0);
+		}
+		return map2.get(new Random().nextInt(map1.size()));
+	}
+}

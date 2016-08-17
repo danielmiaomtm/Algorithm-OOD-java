@@ -1,0 +1,52 @@
+public abstract class Animal {
+	private int num;
+	public Animal (int n) {
+		num = n;
+	}
+	public void setNum (int n) {
+		num = n;
+	}
+	public int getNum (int n) {
+		return num;
+	}
+}
+public class Dog extends Animal {
+	public Dog (int n) {
+		super(n);
+	}
+}
+public class Cat extends Animal {
+	public Cat (int n) {
+		super (n);
+	}
+}
+
+private LinkedList<Dog> dogs = new LinkedList<>();
+private LinkedList<Cat> cats = new LinkedList<>();
+private int order = 0;
+
+public void enqueue (Animal a) {
+	a.setNum(order++);
+
+	if (a instanceOf Dog) {
+		dogs.addLast((Dog) a);
+	} else {
+		cats.addLast((Cat) a);
+	}
+}
+
+public Animal dequeueAny() {
+	if (dogs.size() == 0 && cats.size() != 0) {
+		return cats.poll();
+	} else if (dogs.size() != 0 && cats.size() == 0) {
+		return dogs.poll();
+	} else if (dogs.size() == 0 && cats.size() == 0) {
+		return null;
+	}
+	if (dogs.peek().getNum() < cats.peek().getNum()) {
+		return dogs.poll();
+	} else {
+		return cats.poll();
+	}
+
+}

@@ -1,13 +1,3 @@
-/*
- 
- 给两个calender schedule, 要设定的meeting time interval， 返回最小的可设置schedule的起始时间。
- sched A: [0,10], [10, 15], [13, 20]
- sched B: [0,5], [27, 33]
- meeting_time = 5,
- return 20
- 
- */
-
 import java.util.*;
 import java.io.*;
 

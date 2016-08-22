@@ -1,0 +1,23 @@
+    public void helper (int[][] nums) {
+        int rowCount = nums.length;
+        int columnCount = nums[0].length;
+        int row, col;
+        
+        for (int k = 0; k < rowCount; k++) {
+            List<Integer> list = new ArrayList<>();
+            for (row = k, col = 0; row >= 0 && col < columnCount; row--, col++) {
+                 list.add(nums[row][col]);
+            }
+            System.out.println(Arrays.toString(list.toArray()));
+        }
+        
+        for (int k = 1; k < columnCount; k++) {
+            List<Integer> list = new ArrayList<>();
+            for (row = rowCount - 1, col = k; row >= 0 && col < columnCount; row--, col++ ) {
+                list.add(nums[row][col]);
+            }
+            System.out.println(Arrays.toString(list.toArray()));
+        }
+        
+    }
+    

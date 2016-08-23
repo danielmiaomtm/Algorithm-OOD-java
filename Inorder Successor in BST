@@ -1,0 +1,27 @@
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+	TreeNode node = root;
+	Stack<TreeNode> stack = new Stack<>();
+
+	while (node != p) {
+		stack.push(node.val);
+		if (node.val < p.val) {
+			node = node.right;
+		} else {
+			node = node.left;
+		}
+	}
+	if (node.right != null) {
+		node = node.right;
+	
+		while (node.left != null) {
+			node = node.left;
+		}
+		return node;
+	} else {
+		while (!stack.isEmpty() && stack.peek().val < node.val) {
+			stack.pop();
+		}
+		return stack.isEmpty() ? null : stack.pop();
+	}
+
+}

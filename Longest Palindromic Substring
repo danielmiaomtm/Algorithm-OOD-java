@@ -1,0 +1,37 @@
+public class Solution {
+
+    public String longestPalindrome(String s) {
+        
+        if (s.length() == 0 || s == null) {
+          return "";
+        }
+        char[] c = s.toCharArray();
+        
+        int cur = 0;
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = 0; i < c.length; i++) {
+            if (isPanlindrome (s, i - cur, i)) {
+                sb = new StringBuilder();
+                sb.append(s.substring(i - cur, i + 1));
+                cur++;
+            } else if (isPanlindrome (s, i - cur - 1, i)) {
+                sb = new StringBuilder();
+                sb.append(s.substring(i - cur - 1, i + 1));
+                cur += 2;
+            }
+        }
+        
+        return sb.toString();
+    }
+    public boolean isPanlindrome (String s, int start, int end) {
+        if (start < 0) {
+            return false;
+        }
+        while (start < end) {
+            if (s.charAt(start++) != s.charAt(end--))
+                return false;
+        }
+        return true;
+    }
+}

@@ -1,0 +1,43 @@
+/*
+未排序数组中，累加和小于或等于给定值的最长子数组长度。
+例如：arr=[3,-2,-4,0,6],k=-2,则累加和小于或等于-2的最长子数组的长度为4。[3,-2,-4,0]
+*/
+
+public static int maxLength(int[] arr, int k) {
+        if(arr==null||arr.length==0)
+            return 0;
+        int[] h=new int[arr.length+1];
+        h[0]=0;
+        int sum=arr[0];
+        for(int i=1;i<arr.length;i++){
+            sum+=arr[i];
+            h[i+1]=Math.max(sum,h[i]);
+        }
+        int res=0;
+        int len;
+        int index;
+        sum=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            index=firstBiggerOrEqual(h,sum-k);
+            len=index==-1?0:i-index+1;
+            res=Math.max(res,len);
+        }
+        return res;
+    }
+    public static int firstBiggerOrEqual(int[] h,int num){
+        int left=0;
+        int right=h.length-1;
+        int res=-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(h[mid]>=num){
+                res=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+        return res;
+    }

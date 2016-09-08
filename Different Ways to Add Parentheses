@@ -1,0 +1,32 @@
+public class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        List<Integer> result = new ArrayList<>();
+        if (input == null || input.length() == 0) return result;
+    
+        for (int i = 0; i < input.length(); i++) {
+            char cha = input.charAt(i);
+            if (cha == '+' || cha == '-' || cha == '*') {
+                String left = input.substring(0, i), right = input.substring(i + 1);
+                List<Integer> leftList = diffWaysToCompute(left);
+                List<Integer> rightList = diffWaysToCompute(right);
+                for (int n : leftList) {
+                    for (int m : rightList) {
+                        switch(cha) {
+                            case '+' :
+                                result.add(n + m);
+                                break;
+                            case '-' :
+                                result.add(n - m);
+                                break;
+                            default :
+                                result.add(n * m);
+                        }           
+                    }
+                }
+            }
+        }
+        if (result.size() == 0)
+            result.add(Integer.parseInt(input));
+        return result;
+    }
+}

@@ -1,0 +1,44 @@
+Note:
+
+You may only use constant extra space.
+
+For example,
+Given the following binary tree,
+         1
+       /  \
+      2    3
+     / \    \
+    4   5    7
+After calling your function, the tree should look like:
+         1 -> NULL
+       /  \
+      2 -> 3 -> NULL
+     / \    \
+    4-> 5 -> 7 -> NULL
+
+
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if (root == null) {
+            return;
+        }
+        TreeLinkNode node = root;
+        while (node!= null) {
+            TreeLinkNode dummy = new TreeLinkNode(-1);
+            TreeLinkNode cur = dummy;
+            while (node != null) {
+                if (node.left != null) {
+                    cur.next = node.left;
+                    cur = cur.next;
+                }
+                if (node.right != null) {
+                    cur.next = node.right;
+                    cur = cur.next;
+                }
+                node = node.next;
+            }
+            node = dummy.next;
+        }
+    }
+}

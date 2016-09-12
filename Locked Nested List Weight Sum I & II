@@ -55,54 +55,35 @@ Given the list [1,[4,[6]]], return 17. (one 1 at depth 3, one 4 at depth 2, and 
 */
 
 public int depthSumInverse(List<NestedInteger> nestedList) {
-    if(nestedList==null||nestedList.size()==0)
-        return 0;
- 
-    HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
- 
-    //two stacks: one is for processing nested integer, the other is for tracking layers. 
-    Stack<NestedInteger> stack = new Stack<NestedInteger>();
-    Stack<Integer> layers = new Stack<Integer>();
- 
-    //put all NestedIntegers to Stack and record its layer to be 1
-    for(NestedInteger ni: nestedList){
-        stack.push(ni);
-        layers.push(1);
-    }
- 
-    int maxLayer=Integer.MIN_VALUE;
- 
-    while(!stack.isEmpty()){
-        NestedInteger top = stack.pop();
-        int topLayer = layers.pop();
- 
-        maxLayer=Math.max(maxLayer, topLayer);
- 
-        if(top.isInteger()){
-            if(map.containsKey(topLayer)){
-                map.get(topLayer).add(top.getInteger());
-            }else{
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(top.getInteger());
-                map.put(topLayer, list);
-            }        
-        }else{
-            for(NestedInteger ni: top.getList()){
-                stack.push(ni);
-                layers.push(topLayer+1);
-            }
-        }
-    }
- 
-    // calcualte sum
-    int result=0;
-    for(int i=maxLayer; i>=1; i--){
-        if(map.get(i)!=null){
-            for(int v: map.get(i)){
-                result += v*(maxLayer-i+1);
-            }
-        }
-    }
- 
-    return result;
+	Map<Integer, Integer> map = new HashMap<>();
+	helper(nestedList, depth, map);
+	
+	int result = 0;
+	int maxDepth = Integer.MIN_VALUE;
+	for (int n : map.keSet()) {
+		maxDepth = Math.max(maxDepth, n);
+	}
+
+	for (int n : map.keySet()) {
+		result += (maxDepth - n + 1) * map.get(n);
+	}
+	
+	return result;
+
+}
+public void helper (List<NestedInteger> nestedList, int depth, Map<Integer, Integer> map) {
+	
+	for (NestedInteger n : nestedList) {
+		if (n.isInteger()) {
+			Integer num = map.get(n);
+			if (num == null) {
+				map.put(depth, n.getInteger());
+			} else {
+				map.put(depth, map.get(depth) + n.getInteger());
+			}
+		} else {
+			helper(n.getList(), depth + 1);
+		}
+	}
+	return max;
 }

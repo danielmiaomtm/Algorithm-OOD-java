@@ -1,0 +1,56 @@
+/*
+Examples:
+Input:  "abb", d = 2
+Output: "bab"
+
+Input:  "aacbbc", d = 3
+Output: "abcabc"
+
+Input: "geeksforgeeks", d = 3
+Output: egkegkesfesor
+
+Input:  "aaa",  d = 2
+Output: Cannot be rearranged
+*/
+public String rearrangeString(String str, int k) {
+
+	if (k == 0) {
+		return str;
+	}
+
+	Map<Character, Integer> map = new HashMap<>();
+	for (int i = 0; i < str.length; i++) {
+		char c = str.charAt(i);
+		map.put(c, map.containsKey(c) ? 1 : map.get(c) + 1);
+	}
+
+	PriorityQueue<Character> heap = new PriorityQueue<Character>(map.size(), new Comparator<Character>(){
+		public int compare (Character c1, Character c2) {
+			return map.get(c2) - map.get(c1);
+		}
+	});
+
+	for (Character c : map.keySet()) {
+		heap.offer(c);
+	}
+	char[] s = new char[str.length()];
+	Arrays.fill(s, '\0');
+
+	for (int i = 0; i < s.length; i++) {
+		int p = i;
+		while (s[p] != '\0') {
+			p++;
+		}
+		char c = heap.poll();
+		int count = map.get(c);
+		for (int i = 0; i < count; i++) {
+			if (p >= n) {
+				return "";
+			}
+			s[p] = c;
+			p += k;
+		}
+
+	}
+	return new String(s);
+}

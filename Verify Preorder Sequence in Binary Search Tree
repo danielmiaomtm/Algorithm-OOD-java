@@ -26,3 +26,19 @@ public class Solution {
         return true;
     }
 }
+
+
+// verify the inorder sequence 
+
+public boolean IsValidPostOrderBst(int[] nums){
+        int i = nums.length;
+        int max = Integer.MAX_VALUE;
+        for (int j = nums.length - 1; j >= 0; j--)
+        {
+            if (nums[j] > max) return false;
+            while (i <= nums.length - 1 && nums[j] > nums[i])
+                max = nums[i++];
+            nums[--i] = nums[j];
+        }
+        return true;
+}

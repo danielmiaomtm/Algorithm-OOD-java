@@ -7,3 +7,45 @@ The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4.
 Your algorithm should run in O(n2) complexity.
 
 Follow up: Could you improve it to O(n log n) time complexity?
+
+
+ public int maxEnvelopes(int[][] envelopes) {
+
+    // sort the array base on the width
+        Arrays.sort(envelopes, new Comparator<int[]>(){
+            public int compare (int[] e1, int[] e2) {
+                if (e1[0] != e2[0]) {
+                    return e1[0] - e2[0];
+                } else {
+                    return e2[1] - e1[1];
+                }
+            }
+        });
+        
+        List<Integer> list = new ArrayList<>();
+    // find the longest increasing base on the height
+        for (int i = 0; i < envelopes.length; i++) {
+            if (list.size() == 0 || list.get(list.size() - 1) < envelopes[i][1]) {
+                list.add(envelopes[i][1]);
+            }
+            list.set(helper(list, envelopes[i][1]), envelopes[i][1]);
+        }
+        return list.size();
+    }
+    public int helper (List<Integer> result, int target) {
+        int left = 0;
+        int right = result.size() - 1;
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            if (result.get(mid) < target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        if (result.get(left) > target) {
+            return left;
+        }
+        return right;
+    }
+   

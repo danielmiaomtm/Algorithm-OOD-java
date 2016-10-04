@@ -1,0 +1,77 @@
+class Contact {
+	String name;
+	List<String> email;
+	Contac() {
+		this.name = "";
+		this.email = new ArrayList<>();
+	}
+}
+public List<List<Contact>> (List<Contact> input) {
+	Map<String, List<Integer>> map = new HashMap<>(); 
+	int n = input.size();
+	for (int i = 0; i < n; i++) {
+		for (String e : Contact.email) {
+			List<Integer> list;
+			if (!map.containsKey(e)) {
+				list = new ArrayList<>();
+				list.add(i);
+			} else {
+				list = map.get(e));
+				list.add(i);
+			}
+			map.put(e, list);
+		}
+	}
+
+	unionFind uf = new unionFind(n);
+
+	for (List<Integer> list : map.keySet()) {
+		for (int i = 0; i < list.size() - 1; i++) {
+			uf.unionFind(list.get(i), list.get(i + 1));
+		}
+	}
+	Map<Integer, List<Integer>> groups = new HashMap<>();
+	for (int i = 0; i < n; i++) {
+		List<Integer> list;
+		int cur = uf.find(i);
+			if (!groups.containsKey(cur)) {
+				list = new ArrayList<>();
+				list.add(i);
+			} else {
+				list = groups.get(cur));
+				list.add(i);
+			}
+			groups.put(cur, list);
+	}
+	List<List<Contact>> result = new ArrayList<>();
+	for (List<Integer> list : groups.keySet()) {
+		List<Contact> r = new ArrayList<>();
+		for (int i : list) {
+			r.add(input.get(i));
+		}
+		result.add(r);
+	}
+	return result;
+}
+
+class unionFind {
+	int[] parent;
+	public unionFind (int num_node) {
+		for (int i = 0; i < num_node; i++) {
+			parent[i] = i;
+		}
+	}
+	public int find (int num) {
+		if (parent[num] == numm) {
+			return num;
+		}
+		parent[num] = find(parent[num]);
+		return parent[num];
+	}
+	public void union (int num1, int num2) {
+		if (find(num1) != find(num2)) {
+			parent[num1] = num2;
+		}
+	}
+
+}

@@ -1,0 +1,25 @@
+给你一个array，返回array里面最大数字的index，但是必须是最大数字里面随机的一个index。
+比如[2,1,2,1,5,4,5,5]必须返回[4,6,7]中的随机的一个数字，要求O(1)space。
+
+
+遍历一遍，每次找到最大的话，count + 1,然后再输出平均概率的输出。
+
+public int findMax(int[] arr){
+	int result = -1;
+	int max = Integer.MIN_VALUE;
+	int count = 1;
+	for (int i = 0; i < arr.length; i++) {
+		if (arr[i] == max) {
+			count += 1;
+			int pos = new Random.nextInt(count);
+			if (pos == 0) {
+				result = i;
+			}
+		} else if (arr[i] > max || max = Integer.MIN_VALUE) {			
+				max = arr[i];
+				result = i;
+				count = 1;
+		}
+	}
+	return result;
+}

@@ -1,0 +1,55 @@
+class IntFileIterator {
+  boolean hasNext();
+  int next();
+}
+
+class{
+  public boolean isDistanceZeroOrOne(IntFileIterator a, IntFileIterator b)；
+
+}
+// return if the distance between a and b is at most 1.. 
+// Distance: minimum number of modifications to make a=b
+// Modification:
+//   1. change an int in a
+//   2. insert an int to a
+//   3. remove an int from a
+
+
+
+
+public class FileCompare {
+        public boolean isDistanceZeroOrOne(IntFileIterator a, 
+IntFileIterator b) {
+            boolean ins_a = false, ins_b = false, replace = false, diff = 
+false;
+            int pre_a = 0;
+            int pre_b = 0;
+            while (a.hasNext() && b.hasNext()) {
+                int cur_a = a.next(), cur_b = b.next();
+                if (!ins_a && !ins_b && !replace) {
+                    if (cur_a != cur_b) {
+                        ins_a = ins_b = replace = diff = true;
+                    }
+                } else {
+                    if (ins_a && pre_b != cur_a) ins_a = false;
+                    if (ins_b && pre_a != cur_b) ins_b = false;
+                    if (replace && cur_a != cur_b) replace = false;
+                    if (!ins_a && !ins_b && !replace) return false;
+                }
+                pre_a = cur_a;
+                pre_b = cur_b;
+            }
+
+            if (!a.hasNext() && !b.hasNext()) {
+                return !diff || replace;
+            } else if (a.hasNext()) {
+                int cur_a = a.next();
+                return (!diff || (ins_a && pre_b == cur_a)) && !a.hasNext();
+            } else if (b.hasNext()) {
+                int cur_b = b.next();
+                return (!diff || (ins_b && pre_a == cur_b)) && !b.hasNext();
+            }
+            return false;
+        }
+    }
+}

@@ -1,0 +1,50 @@
+给定一个字符串，输出个数最多的连续的字符（不含空格）。
+比如：
+"this is a sentence" => [t, h, i, s, i, s, a, s, e, n, t, e, n, c, e]
+"thiis iss a senntencee" => [i, s, n, e]
+"thiisss iss a senntttenceee" => [s, t, e]
+"thiisss iss a sennnntttenceee" => [n]
+
+
+
+
+public class Solution {
+	public static void main(String[] args) {
+		String str = "thiisss iss a senntttenceee";
+		ArrayList<Character> list = new Solution().getMostFrequentChars(str);
+		for (Character c : list) {
+			System.out.print(c + " ");
+		}
+	}
+	public void add(ArrayList<Character> list, int count, int preMaxCount, char current) {
+		if (current == ' ') return;
+		if (count > preMaxCount) {
+			list.clear();
+			list.add(current);
+		} else if (count == preMaxCount) {
+			list.add(current);
+		}
+	}
+	
+	public ArrayList<Character> getMostFrequentChars(String str) {
+		ArrayList<Character> list = new ArrayList<Character>();
+		if (str == null || str.length() == 0) return list;
+		char current = str.charAt(0);
+		int count = 1;
+		int preMaxCount = -1;
+		for (int i = 1; i < str.length(); i++) {
+			if (str.charAt(i) == current) {
+				count++;
+			} else {
+				if (count >= preMaxCount) {
+					add(list, count, preMaxCount, current);
+					if (current != ' ') preMaxCount = count;
+				}
+				current = str.charAt(i);
+				count = 1;
+			}
+		}
+		add(list, count, preMaxCount, current);
+		return list;
+	}
+}

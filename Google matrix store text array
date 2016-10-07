@@ -1,0 +1,42 @@
+whether matrix can store text;
+
+
+
+第二题感觉就直接scan array吧，用几个pointer记录位置，注意考虑corner case就行，简单写了下，能run 图里的test case.
+
+public static int solution(String[] text, int c, int l) {
+
+                int count = 0, index = 0, indexCol = 0, res = 0;
+                while (count < l) {
+                        String word = text[index];
+                        // one line cannot hold the whole word.
+                        if (word.length() > c). From 1point 3acres bbs
+                                return 0;
+
+                        // add to next line. 
+                        if (c - indexCol < word.length()) {
+                                count++;
+                                indexCol = word.length() - 1;
+                        }
+
+                        // add to current line-google 1point3acres
+                        else {
+                                indexCol += word.length() - 1;
+                                if (indexCol + 1 == c - 1) {
+                                        indexCol = 0;
+                                        count++;
+                                }
+                                if (indexCol + 1 == c) {
+                                        indexCol = c > 1 ? 1 : 0;
+                                        count = c > 1 ? count + 1 : count + 2;
+                                }
+                        }. 
+
+                        // move to next word or return to first word
+                        if (++index == text.length) {
+                                index = 0;
+                                if (count < l) res++;
+                        }. 
+                }
+                return res;
+        }

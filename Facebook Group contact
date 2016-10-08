@@ -1,3 +1,16 @@
+/*
+有这么一个class Contact，里面有一个string的name，
+和一个vector 装着email address，是这个Contact有的address，
+用一个list装着是因为一个人有可 能有多个email，现在给你vector，比如
+{
+    { "John", {"john@gmail.com"} },
+    { "Mary", {"mary@gmail.com"} },
+    { "John", {"john@yahoo.com"} },
+    { "John", {"john@gmail.com", "john@yahoo.com", "john@hotmail.com"} },
+    { "Bob",  {"bob@gmail.com"} }
+}
+*/
+
 class Contact {
 	String name;
 	List<String> email;

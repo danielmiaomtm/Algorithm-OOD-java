@@ -56,6 +56,7 @@ public List<List<Contact>> (List<Contact> input) {
 			}
 			groups.put(cur, list);
 	}
+	
 	List<List<Contact>> result = new ArrayList<>();
 	for (List<Integer> list : groups.keySet()) {
 		List<Contact> r = new ArrayList<>();
@@ -82,8 +83,10 @@ class unionFind {
 		return parent[num];
 	}
 	public void union (int num1, int num2) {
-		if (find(num1) != find(num2)) {
-			parent[num1] = num2;
+		int n1 = find(num1);
+        	int n2 = find(num2);
+        	if (n1 != n2) {
+			parents[n1] = n2;
 		}
 	}
 

@@ -31,6 +31,20 @@ ABE)FK)))C)DG)H)H)I)J))
 	}
   
 //deserialization  
+
+static class Node {
+    	char c;
+    	List<Node> list = new LinkedList<Node>();
+    	int index = 0;
+    	public Node(char c){
+    	 this.c = c;
+    	}
+ 
+    	public void addChild(Node node){
+    		list.add(index++, node);
+    	}
+    }
+    
   public Node deserialize(String str)
     {
     	new Node(str.charAt(0));

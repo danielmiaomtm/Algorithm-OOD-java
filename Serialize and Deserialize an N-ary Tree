@@ -1,0 +1,66 @@
+        A
+   B    C    D
+ E   F     G  H  I  J 
+     K
+     
+ABE)FK)))C)DG)H)H)I)J))
+
+     
+     
+  private StringBuffer sb = new StringBuffer();
+	public String serialize(Node root)
+	{
+		serializeRecursive(root);
+		return sb.toString();
+	}
+ 
+ 
+	private void serializeRecursive(Node root)
+	{
+		if (root == null)
+		{
+			return;
+		}
+ 
+		sb.append(root.c);
+		for(Node node : root.list)
+		{
+			serializeRecursive(node);
+		}
+		sb.append(')');
+	}
+  
+//deserialization  
+  public Node deserialize(String str)
+    {
+    	new Node(str.charAt(0));
+    	Node root = deserializeRecursive(str);
+    	return root;
+    }
+ 
+    private int currentIndex = 0;
+	private Node deserializeRecursive(String str)
+	{
+		if (currentIndex >= str.length())
+		{
+			return null;
+		}
+		else if (str.charAt(currentIndex) == ')')
+		{
+			return null;
+		}
+ 
+		Node root = new Node(str.charAt(currentIndex));
+		while(currentIndex < str.length())
+		{
+			currentIndex++;
+			Node child = deserializeRecursive(str);
+			if (child == null)
+				break;
+			root.addChild(child);
+ 
+		}			
+		return root;
+	}
+  
+  

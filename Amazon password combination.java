@@ -7,9 +7,8 @@ output : [pass, pas$, pa$s, pa$$, p@ss, p@s$, p@$s, p@$$]
 
 
 
-	Map<Character, Character> map;
+	
 	public List<String> comb (String pwd, Map<Character, Character> map) {
-		this.map = map;
 		List<String> list = new ArrayList<>();
 		if (pwd == null || pwd.length() == 0) {
 			return list;

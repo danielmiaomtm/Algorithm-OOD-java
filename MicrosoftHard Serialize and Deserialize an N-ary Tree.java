@@ -8,23 +8,19 @@ ABE)FK)))C)DG)H)H)I)J))
      
      
   private StringBuffer sb = new StringBuffer();
-	public String serialize(Node root)
-	{
+	public String serialize(Node root) {
 		serializeRecursive(root);
 		return sb.toString();
 	}
  
  
-	private void serializeRecursive(Node root)
-	{
-		if (root == null)
-		{
+	private void serializeRecursive(Node root) {
+		if (root == null){
 			return;
 		}
  
 		sb.append(root.c);
-		for(Node node : root.list)
-		{
+		for(Node node : root.list){
 			serializeRecursive(node);
 		}
 		sb.append(')');
@@ -45,28 +41,22 @@ static class Node {
     	}
     }
     
-  public Node deserialize(String str)
-    {
+  public Node deserialize(String str){
     	new Node(str.charAt(0));
     	Node root = deserializeRecursive(str);
     	return root;
     }
  
     private int currentIndex = 0;
-	private Node deserializeRecursive(String str)
-	{
-		if (currentIndex >= str.length())
-		{
+	private Node deserializeRecursive(String str){
+		if (currentIndex >= str.length()){
 			return null;
-		}
-		else if (str.charAt(currentIndex) == ')')
-		{
+		}else if (str.charAt(currentIndex) == ')'){
 			return null;
 		}
  
 		Node root = new Node(str.charAt(currentIndex));
-		while(currentIndex < str.length())
-		{
+		while(currentIndex < str.length()){
 			currentIndex++;
 			Node child = deserializeRecursive(str);
 			if (child == null)

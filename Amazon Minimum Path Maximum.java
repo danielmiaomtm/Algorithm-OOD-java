@@ -11,26 +11,25 @@ Maximum Minimum Path
 return: 5. 
 */
 
-int max = Integer.MIN_VALUE;
-int rowNum;
-int colNum;
-public maxMinPath helper(int[][] matrix){
-	rowNum = matrix.length;
-	colNum = matrix[0].length;
-	int min = Integer.MAX_VALUE;
-	helper(matrix, min, 0, 0);
-	return min;
+public int MaxMinPath (int[][] matrix) {
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        return 0;
+    }
+    int min = Integer.MAX_VALUE;
+    helper(matrix, min, 0, 0);
+    return max;
 }
 public void helper (int[][] matrix, int min, int row, int col) {
-	if (row >= rowNum || col >= colNum) {
-		return;
-	}
-	if (rowNum - 1 == row && colNum - 1 == col) {
-		min = Math.min(min, matrix[row][col]);
-		max = Math.max(max, min);
-		return;
-	}
-	min = Math.min(min, matrix[i][j]);
-	helepr(matrix, min, row + 1, col);
-	helper(matrix, min ,row, col + 1);
+
+    if (row >= matrix.length || col >= matrix[0].length) {
+        return;
+    }
+    if (row == matrix.length - 1 && col == matrix[0].length - 1) {
+        max = Math.max(min, max);
+        return;
+    }
+    min = Math.min(matrix[row][col], min);
+    helper(matrix, min, row + 1, col);
+    helper(matrix, min, row, col + 1);
+
 }

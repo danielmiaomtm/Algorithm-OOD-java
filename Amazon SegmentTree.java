@@ -42,3 +42,26 @@ public SegmentTreeNode buildTree(int[] nums, int start, int end) {
 	}
 	return root;
 }
+
+//查询区间最大值
+public int query(SegmentTreeNode root, int start, int end) {
+        if (root == null || end < root.start || start > root.end) {
+		return 0;
+	}
+        if (root.start == root.end) {
+		return root.max;
+	}
+        return Math.max(query(root.left, start, end), query(root.right, start, end));
+}
+
+//修改区间值
+public void modify(SegmentTreeNode root, int index, int value) {
+        if (index > root.end || index < root.start) return;
+        if (root.start == root.end) {
+            root.max = value;
+            return;
+        }
+        if (index <= (root.start + root.end) / 2) modify(root.left, index, value);
+        else modify(root.right, index, value);
+        root.max = Math.max(root.left.max, root.right.max);
+    }

@@ -16,6 +16,7 @@ int preStart = 0;
         for(int i = inStart ; i <= inEnd; i++){
             if(inorder[i] == preorder[preStart]){
                 inMid = i;
+                break;
             }
         }
         preStart++;

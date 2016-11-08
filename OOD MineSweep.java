@@ -1,3 +1,13 @@
+  class Node{
+    int val;
+    boolean isVisible;
+    Node(val) {
+      this.val = val;
+      isVisible = false;
+    }
+  }
+
+
   int mWidth;
   int mHeight
   int mines;

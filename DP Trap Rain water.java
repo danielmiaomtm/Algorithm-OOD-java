@@ -15,11 +15,13 @@ public int trapRainWater(int[] heights) {
         if (heights.length <= 2 || heights == null) {
             return 0;
         }
+        //first go through from left to right, and get the max from left
         int[] temp = new int[heights];
         int max = heights[0];
         for (int i = 1; i < heights.length; i++) {
             temp[i] = Math.max(max, heights[i - 1]);
         }
+        //go through from right to left, get the water
         int result = 0;
         max = heights[heights.length - 1];
         for (int i = heights.length - 2; i > 0; i++) {

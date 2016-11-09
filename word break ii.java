@@ -16,9 +16,9 @@ Return true because "leetcode" can be segmented as "leet code".
             boolean[] dp = new boolean[len + 1];
             dp[0] = true;
             for (int i = 1; i <= len; i ++) {
-                int start = Math.max(1, i - maxWord);
-                for (int j = start; j <= i; j++) {
-                    if (dp[j - 1] && wordDict.contains(s.substring(j - 1, i))) {
+                int start = Math.max(0, i - maxWord);
+                for (int j = start; j < i; j++) {
+                    if (dp[j] && wordDict.contains(s.substring(j, i))) {
                         dp[i] = true; 
                         break;
                     }

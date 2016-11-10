@@ -1,3 +1,55 @@
+// N-Queens II find the number of ways to place queens, DFS
+
+class Solution {
+    /**
+     * Calculate the total number of distinct N-Queen solutions.
+     * @param n: The number of queens.
+     * @return: The total number of distinct solutions.
+     */
+     public static int sum;
+    public int totalNQueens(int n) {
+        //write your code here
+        sum = 0;
+        List<Integer> list = new ArrayList<>();
+        placeQueen(list, 0, n);
+        return sum;
+    }
+    public void placeQueen(List<Integer> list, int row, int n) {
+        
+        if (list.size() == n) {
+            sum++;
+            return;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (isValid(list, row, i)) {
+                list.add(i);
+                placeQueen(list, row + 1, n);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+    public boolean isValid(List<Integer> list, int row, int col) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == col) {
+                return false;
+            }
+            if (i + list.get(i) == row + col) {
+                return false;
+            }
+            if (i - list.get(i) == row - col) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+};
+
+
+
+
+
 class Solution {
     /**
      * Get all distinct N-Queen solutions

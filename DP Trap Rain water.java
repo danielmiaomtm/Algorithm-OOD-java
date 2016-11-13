@@ -24,7 +24,7 @@ public int trapRainWater(int[] heights) {
         //go through from right to left, get the water
         int result = 0;
         max = heights[heights.length - 1];
-        for (int i = heights.length - 2; i > 0; i++) {
+        for (int i = heights.length - 2; i > 0; i--) {
             int left = temp[i];
             int right = max;
             int water = Math.min(left, right);

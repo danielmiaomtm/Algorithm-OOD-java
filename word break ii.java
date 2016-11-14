@@ -49,13 +49,18 @@ A solution is ["cats and dog", "cat sand dog"].
 */    
     
     
-    public List<String> wordBreak(String s, Set<String> wordDict) {
+        public List<String> wordBreak(String s, Set<String> wordDict) {
         ArrayList<String> [] pos = new ArrayList[s.length()+1];
         pos[0]=new ArrayList<String>();
-
+        int maxLen = 0;
+        for (String word : wordDict) {
+            if (word.length() > maxLen) {
+                maxLen = word.length();
+            }
+        }
         for(int i=0; i<s.length(); i++){
             if(pos[i]!=null){
-                for(int j=i+1; j<=s.length(); j++){
+                for(int j=i+1; j<=s.length() && i + maxLen >= j; j++){
                     String sub = s.substring(i,j);
                     if(wordDict.contains(sub)){
                         if(pos[j]==null){
@@ -90,4 +95,5 @@ A solution is ["cats and dog", "cat sand dog"].
             String combined = s + " "+ curr;
             dfs(pos, result, combined, i-s.length());
         }
+
     }

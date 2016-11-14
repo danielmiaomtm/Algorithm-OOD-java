@@ -49,47 +49,45 @@ A solution is ["cats and dog", "cat sand dog"].
 */    
     
     
-    public class Solution {
-    
-    public List<String> res = new LinkedList<String>();
-    
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<String> dp[] = new ArrayList[s.length()+1];
-        dp[0] = new ArrayList<String>();
-        for(int i = 0; i < s.length(); i++){
-            // 只在单词的后一个字母开始寻找，否则跳过
-            if(dp[i]==null) continue;
-            // 看从当前字母开始能组成哪个在字典里的词
-            for(String word : wordDict){
-                int len = word.length();
-                if(i + len > s.length()) continue;
-                String sub = s.substring(i, i+len);
-                if(word.equals(sub)){
-                    if(dp[i + len] == null){
-                        dp[i + len] = new ArrayList<String>();
+        ArrayList<String> [] pos = new ArrayList[s.length()+1];
+        pos[0]=new ArrayList<String>();
+
+        for(int i=0; i<s.length(); i++){
+            if(pos[i]!=null){
+                for(int j=i+1; j<=s.length(); j++){
+                    String sub = s.substring(i,j);
+                    if(wordDict.contains(sub)){
+                        if(pos[j]==null){
+                            ArrayList<String> list = new ArrayList<String>();
+                            list.add(sub);
+                            pos[j]=list;
+                        }else{
+                            pos[j].add(sub);
+                        }
+
                     }
-                    dp[i + len].add(word);
                 }
             }
         }
-        // 如果数组末尾不存在单词，说明找不到分解方法
-        if(dp[s.length()]!=null) backTrack(dp, s.length(), new ArrayList<String>());
-        return res;
+
+        if(pos[s.length()]==null){
+            return new ArrayList<String>();
+        }else{
+            ArrayList<String> result = new ArrayList<String>();
+            dfs(pos, result, "", s.length());
+            return result;
+        }
     }
-    
-    private void backTrack(List<String> dp[], int end, ArrayList<String> tmp){
-        if(end <= 0){
-            String path = tmp.get(tmp.size()-1);
-            for(int i = tmp.size() - 2; i >= 0; i--){
-                path += " " + tmp.get(i);
-            }
-            res.add(path);
+
+    public void dfs(ArrayList<String> [] pos, ArrayList<String> result, String curr, int i){
+        if(i==0){
+            result.add(curr.trim());
             return;
         }
-        for(String word : dp[end]){
-            tmp.add(word);
-            backTrack(dp, end - word.length(), tmp);
-            tmp.remove(tmp.size()-1);
+
+        for(String s: pos[i]){
+            String combined = s + " "+ curr;
+            dfs(pos, result, combined, i-s.length());
         }
     }
-}

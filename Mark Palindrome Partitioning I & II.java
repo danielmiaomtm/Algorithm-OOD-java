@@ -39,3 +39,48 @@ At the end, return cut[s.length() - 1].
         }//end for j_for
         return cut[length - 1];
     }
+
+
+
+
+// Palindrome Partitioning I 
+public class Solution {
+     public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<List<String>>();
+        List<String> list = new ArrayList<String>();
+        
+        if (s == null || s.length() == 0)   return result;
+        
+        helper(s, list, 0, result);
+        
+        return result;
+    }
+    
+    private void helper(String s, List<String> path, int pos, List<List<String>> result) {
+        if (pos == s.length()) {
+            result.add(new ArrayList<String>(path));
+            return;
+        }
+
+        for (int i = pos + 1; i <= s.length(); i++) {
+            String prefix = s.substring(pos, i);
+            if (!isPalindrome(prefix)) {
+                continue;
+            }
+
+            path.add(prefix);
+            helper(s, path, i, result);
+            path.remove(path.size() - 1);
+        }
+    }
+    
+    
+    private boolean isPalindrome(String s) {
+        int start = 0, end = s.length() - 1;
+        while(start <= end) {
+            if (s.charAt(start++) != s.charAt(end--))
+                return false;
+        }
+        return true;
+    }
+}

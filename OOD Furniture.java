@@ -1,4 +1,6 @@
 /*
+https://www.careercup.com/question?id=5183557542608896
+
 Design a OO system for furniture where there are wooden chairs and tables, metal chairs and tables. 
 There are stress and fire tests for each products.
 */

@@ -2,84 +2,106 @@
 There are 3 products table,chair and bench. Product can be of wood ,metal and plastic . Design a class structures for this.
 */
 
-public abstract class Furniture {
-String color = "";
-String price = "";
-}
-public abstract class PlasticFurniture extends Furniture {
-
-
-}
-public abstract class WoodenFurntiure extends Furniture {
-
-}
-public class PlasticChair extends PlasticFurniture {
-  public PlasticChair(String col, String p) {
-  color = col;
-  price = p;
-  }
-}
-public class WoodenChair extends WoodenFurntiure {
-  public WoodenChair(String col, String p) {
-  color = col;
-  price = p;
-  }
+public interface Furniture {
+    public void stressTest();
+    public void fireTest();
 }
 
-public abstract class FurnitureFactory {
-public abstract Furniture createChair();
-public abstract Furniture createTable();
-}
-//
-  public class WoodenFurnitureFactory extends FurnitureFactory {
+public abstract class Chair implements Furniture {
+public abstract String chairType();
 
+}
+public abstract class Table implements Furniture {
+ public abstract String tableType();
+}
+
+public class MetalChair extends Chair {
     @Override
-    public Furniture createChair() {
-    return new WoodenChair("Red","1000");
+    public void stressTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Furniture createTable() {
-    return new WoodenTable("Red","1000");
+    public void fireTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
+}
 
-  }
-//
-  public class PlasticFurnitureFactory extends FurnitureFactory {
+public class MetalTable extends Table {
+    @Override
+    public void stressTest() {
+
+        System.out.println("Passed Stress Test");
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     @Override
-    public Furniture createChair() {
-    return new PlasticChair("Red","1000");
+    public void fireTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        System.out.println("Passed Fire Test");
     }
 
     @Override
-    public Furniture createTable() {
-    return new PlasticTable("Red","1000");
+    public String tableType() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        String s = "This is a metal Table";
+        return s;
+    }
+}
+
+
+public class WoodenTable extends Table {
+    @Override
+    public void stressTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        System.out.println("Failed Stress Test");
     }
 
-  }
-public class FurnitureMakerFactory {
+    @Override
+    public void fireTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        System.out.println("Failed Fire Test");
+    }
 
-  private static FurnitureFactory factory = null;
+    @Override
+    public String tableType() {
+        //To change body of implemented methods use File | Settings | File Templates.
+        String s = "This is a wooden Table";
+        return s;
+    }
+}
 
-    static FurnitureFactory getFactory(String choice) {
-      if (choice.equals("wooden")) {//TODO: create a Constant file 
-        factory = new WoodenFurnitureFactory();
-        } else if (choice.equals("plastic")) {
-        factory = new PlasticFurnitureFactory();
+
+public class WoodenChair extends Chair {
+    @Override
+    public void stressTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void fireTest() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+}
+
+public class MainClass {
+    public static void main(String[] args){
+        Table table = null;
+        Scanner input =  new Scanner(System.in);
+        String str = input.next();
+        if(str.equals("wooden")){
+            table = new WoodenTable();
+
+
+        }   else if (str.equals("metal")){
+            table = new MetalTable();
+
+
         }
-      return factory;
+
+        System.out.println(table.tableType());
+        table.stressTest();
+        table.fireTest();
+
     }
-
 }
-
-  //client 
-  public class Client {
-
-      public static void main(String[] args) {
-      FurnitureFactory pf=FurnitureMakerFactory.getFactory("wooden");
-      Furniture product=pf.createChair();
-      }
-
-  }
-

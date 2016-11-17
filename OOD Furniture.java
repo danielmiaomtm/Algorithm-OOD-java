@@ -1,5 +1,6 @@
 /*
-There are 3 products table,chair and bench. Product can be of wood ,metal and plastic . Design a class structures for this.
+Design a OO system for furniture where there are wooden chairs and tables, metal chairs and tables. 
+There are stress and fire tests for each products.
 */
 
 public interface Furniture {

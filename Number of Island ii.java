@@ -56,7 +56,7 @@ public class Solution {
                 int x = positions[i][0] + dirs[j][0];
                 int y = positions[i][1] + dirs[j][1];
                 if (x >= 0 && x < m && y >= 0 && y < n && id[x * n + y] != -1) {
-                    int root = root(id, x * n + y);
+                    int root = find(id, x * n + y);
 
                     // 发现root不等的情况下，才union, 同时减小count
                     if (root != index) {
@@ -70,11 +70,11 @@ public class Solution {
         return res;
     }
     
-    public int root(int[] id, int i) {
-        while (i != id[i]) {
-            id[i] = id[id[i]]; // 优化，为了减小树的高度                
-            i = id[i];
+    public int find(int[] id, int i) {
+        if (id[i] == i) {
+            return i;
         }
-        return i;
+        id[i] = find(id[i]);
+        return id[i];
     }
 }

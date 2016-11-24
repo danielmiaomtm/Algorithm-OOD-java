@@ -10,84 +10,138 @@
     { "Bob",  {"bob@gmail.com"} }
 }
 */
-
 class Contact {
-	String name;
-	List<String> email;
-	Contac() {
-		this.name = "";
-		this.email = new ArrayList<>();
-	}
+    public String name;
+    public List<String> email;
+    Contact(String name, List<String> email) {
+        this.name = name;
+        this.email = email;
+    }
 }
-public List<List<Contact>> (List<Contact> input) {
-	Map<String, List<Integer>> map = new HashMap<>(); 
-	int n = input.size();
-	for (int i = 0; i < n; i++) {
-		for (String e : Contact.email) {
-			List<Integer> list;
-			if (!map.containsKey(e)) {
-				list = new ArrayList<>();
-				list.add(i);
-			} else {
-				list = map.get(e));
-				list.add(i);
-			}
-			map.put(e, list);
-		}
+class UnionFind {
+    int[] parents;
+    public UnionFind(int n) {
+        parents = new int[n];
+        for (int i = 0; i < n; i++) parents[i] = i;
+    }
+    public void union(int n1, int n2) {
+        int r1 = find(n1);
+        int r2 = find(n2);
+        if (r1 != r2) {
+		parents[r1] = r2;
 	}
+    }
+    public int find(int node) {
+        if (parents[node] == node) {
+		return node;
+	}
+        parents[node] = find(parents[node]);
+        return parents[node];
+    }    
+    public boolean isConnected(int n1, int n2) {
+        return find(n1) == find(n2);
+    }
+}
 
-	unionFind uf = new unionFind(n);
+public List<List<String>> groupContact (List<Contact> input) {
 
-	for (List<Integer> list : map.keySet()) {
-		for (int i = 0; i < list.size() - 1; i++) {
-			uf.unionFind(list.get(i), list.get(i + 1));
-		}
+    Map<String, List<Integer>> map = new HashMap<>(); 
+
+    int n = input.size();
+
+    for (int i = 0; i < n; i++) {
+	for (String e : input.get(i).email) {
+	    List<Integer> list;
+	    if (!map.containsKey(e)) {
+		list = new ArrayList<>();
+		list.add(i);
+	    } else {
+		list = map.get(e);
+		list.add(i);
+	    }
+	    map.put(e, list);
 	}
-	Map<Integer, List<Integer>> groups = new HashMap<>();
-	for (int i = 0; i < n; i++) {
-		List<Integer> list;
-		int cur = uf.find(i);
-			if (!groups.containsKey(cur)) {
-				list = new ArrayList<>();
-				list.add(i);
-			} else {
-				list = groups.get(cur));
-				list.add(i);
-			}
-			groups.put(cur, list);
+    }
+
+    UnionFind uf = new UnionFind(n);
+
+    for (List<Integer> list : map.values()) {
+	for (int i = 0; i < list.size() - 1; i++) {
+	    uf.union(list.get(i), list.get(i + 1));
 	}
+    }
+
+    Map<Integer, List<Integer>> groups = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+	List<Integer> list;
+	int cur = uf.find(i);
+	    if (!groups.containsKey(cur)) {
+		list = new ArrayList<>();
+		list.add(i);
+	    } else {
+		list = groups.get(cur);
+		list.add(i);
+	    }
+	    groups.put(cur, list);
+    }
+
+    List<List<String>> result = new ArrayList<>();
+    for (List<Integer> val : groups.values()) {
+	List<String> temp = new ArrayList<>();
+	for (int pos : val) {
+		temp.add(input.get(pos).name);
+	}
+	result.add(new ArrayList<>(temp));
+    }
+
+    return result;
+}
+
+
+public static void main (String[] args) {
+		
+		practise sol = new practise();
+		
+		List<Contact> input = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+        list.add("aaa@gmail.com");
+        list.add("bbb@gmail.com");
+        String name = "c1";
+       Contact c1 = new Contact(name, list);
+        
+        List<String> list2 = new ArrayList<>();
+        list2.add("bbb@gmail.com");
+        String name2 = "c2";
+       
+        Contact c2 = new Contact(name2, list2); 
+        
+        List<String> list3 = new ArrayList<>();
+        list3.add("aaa@gmail.com");
+        String name3 = "c3";
+       
+        Contact c3 = new Contact(name3, list3); 
+        
+        
+        List<String> list4 = new ArrayList<>();
+        list4.add("ddd@gmail.com");
+        String name4 = "c4";
+       
+        Contact c4 = new Contact(name4, list4);
+        
+        List<String> list5 = new ArrayList<>();
+        list5.add("ccc@gmail.com");
+        list5.add("ddd@gmail.com");
+        String name5 = "c5";
+       
+        Contact c5 = new Contact(name5, list5);
+        
+        input.add(c1);
+        input.add(c2);
+        input.add(c3);
+        input.add(c4);
+        input.add(c5);
+        
+        
+        sol.groupContact(input);
 	
-	List<List<Contact>> result = new ArrayList<>();
-	for (List<Integer> list : groups.keySet()) {
-		List<Contact> r = new ArrayList<>();
-		for (int i : list) {
-			r.add(input.get(i));
-		}
-		result.add(r);
 	}
-	return result;
-}
-
-class unionFind {
-	int[] parent;
-	public unionFind (int num_node) {
-		for (int i = 0; i < num_node; i++) {
-			parent[i] = i;
-		}
-	}
-	public int find (int num) {
-		if (parent[num] == numm) {
-			return num;
-		}
-		parent[num] = find(parent[num]);
-		return parent[num];
-	}
-	public void union (int num1, int num2) {
-		int n1 = find(num1);
-        	int n2 = find(num2);
-        	if (n1 != n2) {
-			parents[n1] = n2;
-		}
-	}
-
-}

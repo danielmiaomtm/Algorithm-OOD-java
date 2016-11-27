@@ -47,20 +47,18 @@ class myCode
       return result;
   }
   public void helper (Tree root, int num, int target, List<Integer> list, List<List<Integer>> result) {
-      if (target > target) {
-          return;
-      }
+      
       if (num + root.val == target) {
           list.add(root.val);
           result.add(new ArrayList<>(list));
           list.remove(list.size() - 1);
-          return;
       }
       for (Tree node : root.list) {
           list.add(root.val);
           helper(node, num + root.val, target, list, result);
           list.remove(list.size() - 1);
       }
+   
   }
 
                                         

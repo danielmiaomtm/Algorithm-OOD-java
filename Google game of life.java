@@ -51,7 +51,7 @@ public void gameOfLife(int[][] board) {
             if(board[i][j] == 0 && lives == 3){
                 board[i][j] = 3;
             } else if(board[i][j] == 1){
-                if(lives != 2) { 
+                if(lives != 2 && lives != 3) { 
                   board[i][j] = 2;
                 }
             }

@@ -57,15 +57,15 @@ adbceghfi
 */
 //Java
 	//move down or move 
-	public List<Integer> printFlat (int[][] nums) {
-		List<Integer> result = new ArrayList<>();
-		//corner case, when there is empty matrix
+public List<Integer> printFlat (int[][] nums) {
+	List<Integer> result = new ArrayList<>();
+	//corner case, when there is empty matrix
 	
-		if (nums == null || nums.length == 0 || nums[0].length == 0) {
-			return result;
-		}
+	if (nums == null || nums.length == 0 || nums[0].length == 0) {
+		return result;
+	}
 		
-		int rowNum = nums.length;
+	int rowNum = nums.length;
         int colNum = nums[0].length;
         int row = 0;
         int col = 0;

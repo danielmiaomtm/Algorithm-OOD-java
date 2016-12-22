@@ -45,3 +45,70 @@ public void helper (int[][] nums) {
         }
     }
 }
+
+/*zig zag print matrix
+input:
+a b c
+d e f
+g h i
+
+output:
+adbceghfi
+*/
+//Java
+	//move down or move 
+	public List<Integer> printFlat (int[][] nums) {
+		List<Integer> result = new ArrayList<>();
+		//corner case, when there is empty matrix
+	
+		if (nums == null || nums.length == 0 || nums[0].length == 0) {
+			return result;
+		}
+		
+		int rowNum = nums.length;
+        int colNum = nums[0].length;
+        int row = 0;
+        int col = 0;
+        
+        while (row < rowNum && col < colNum) {
+        	
+        	result.add(nums[row][col]);
+        	//row not comes to bottom
+        	if (row < rowNum - 1) {
+        		row++;
+        	} else if (col < colNum - 1) {
+        		//comes to the bottom side
+        		col++; 
+        	} else { 	
+        		break;
+        	}
+        	// print left bottom to up right
+        	int x, y;
+        	for (x = row, y = col; x > 0 && y < colNum - 1; x--, y++) {
+        		result.add(nums[x][y]);
+	        }
+        	row = x++;
+        	col = y--;
+        	
+        	result.add(nums[row][col]);
+        	
+        	//if in the left part, go to right
+	        if(row == 0 && col < colNum - 1) {
+	            col++;
+	        } else {
+	        //in the right part, row increase
+	            row++;
+        	}
+	        
+	        //print up right to bottom left
+	        for (x = row, y = col; x < rowNum - 1 && y > 0; x++, y--) {
+	        	result.add(nums[x][y]);
+	        }
+	        row = x--;
+	        col = y++;
+	        
+	        
+        }
+        return result;
+
+	}

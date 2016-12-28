@@ -1,11 +1,13 @@
 /*
-2D matrix代表state，1是on，0是off，对于每一个cell，看周围8个neighbor，如果有2个neighbor是on，那么状态不变，如果3个是on，则是on，否则都是off。
-问如何更新。
+Any live cell with fewer than two live neighbors dies, as if caused by under-population. 
+Any live cell with two or three live neighbors lives on to the next generation. 
+Any live cell with more than three live neighbors dies, as if by over-population.. 
+Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction
 
-0   off - off (2 on / else)
-1   on  - off (2 on)
-2   on  - on  (else)
-3   off - on  (3on)
+0 : 上一轮是0，这一轮过后还是0
+1 : 上一轮是1，这一轮过后还是1
+2 : 上一轮是1，这一轮过后变为0
+3 : 上一轮是0，这一轮过后变为1
 
 */
 

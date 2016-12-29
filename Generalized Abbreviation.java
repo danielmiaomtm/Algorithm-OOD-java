@@ -8,28 +8,38 @@ Return the following list (order does not matter):
 // totally should be 2^n, so it has binary representation numbers
 
 public List<String> generateAbbreviations(String word) {
-
         List<String> result = new ArrayList<>();
         for (int i = 0; i < Math.pow(2, word.length()); i++) {
-            String out = "";
-            int count = 0;
-            int t = i;
-            for (int j = 0; j < word.length(); j++) {
-                if ((t & 1) == 1) {
-                    count++;
-                    if (j == word.length() - 1) {
-                        out += Integer.toString(count);
+
+            int temp = i;
+            int count = word.length() - 1;
+            StringBuilder sb = new StringBuilder();
+            int num = 0;
+
+            while (count >= 0) {
+                if ((temp & 1) == 0) {
+                    if (num > 0) {
+                        sb.insert(0, num);
+                        num = 0;
                     }
+                    sb.insert(0, word.charAt(count));
                 } else {
-                    if (count != 0) {
-                        out += Integer.toString(count);
-                        count = 0;
+                    if (num == 0) {
+                        num = 1;
+                    } else {
+                        num++;
                     }
-                    out += word.charAt(j);;
                 }
-                t >>= 1;
+                temp >>= 1;
+                count--;
             }
-            result.add(out);
+
+            if (num > 0) {
+                sb.insert(0, num);
+            }
+
+            result.add(sb.toString());
+
         }
         return result;
-    }
+}

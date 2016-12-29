@@ -28,26 +28,39 @@ Given A = [1,2,4], return false.
 这里的取最小值和上面一样的意思，对方选取过之后的值一定是使得我们选取的值最小，对方不傻并且还很聪明
 最后我们可以取上面两个dp[i]的最大值，就是答案，这里意思是：对方留得差的方案中，我们选取的最大值。
 */
-public boolean firstWillWin(int[] values) {
-    // write your code here
-    // dp 表示从i到end 的最大值
-    // int values[] ={1,2,4,3,4,8,5,6,12};
-    int len = values.length;
-    // 长度小于2的时候第一个人一定获胜
-    if(len <= 2)
-        return true;
-    int dp[] = new int[len+1];
-    dp[len] = 0;
-    dp[len-1] = values[len-1];
-    dp[len-2] = values[len-1] + values[len - 2];
-    dp[len - 3] = values[len-3] + values[len - 2];
-    for(int i = len - 4; i >= 0; i--){
-        dp[i] = values[i] + Math.min(dp[i+2],dp[i+3]);
-        dp[i] = Math.max(dp[i],values[i]+values[i+1]+ Math.min(dp[i+3],dp[i+4]));
 
+
+public boolean firstWillWin(int[] values) {
+        // write your code here
+        int len = values.length;
+        if (len <= 2) {
+            return true;
+        }
+        //dp[i] means the largest value you(the first player) 
+        //can get when you start from values[i] 
+        int[] dp = new int[len+1];
+        //not even exist
+        dp[len] = 0;
+        //when you happen to have the last coin, yes, consider the last first
+        dp[len-1] = values[len-1];
+        //sure we should get the last two for most value
+        dp[len-2] = values[len-1] + values[len-2];
+        //same rules, why leave two(len-1, len-2) for the other player
+        dp[len-3] = values[len-2] + values[len-3];
+        //next we are gonna sum up
+        for (int i = len-4; i >= 0; i--) {
+            //you have to have values[i] and the non-optimal later choice
+            //because the other player is smart to leave you the worse one
+            //between two of your optimal choices
+            dp[i] = values[i] + Math.min(dp[i+2], dp[i+3]);
+            dp[i] = Math.max(dp[i], values[i] + values[i+1] + Math.min(dp[i+3], dp[i+4]));
+            //equals to: dp[i] = Math.max(values[i] + Math.min(dp[i+2],dp[i+3]), values[i] + values[i+1] + Math.min(dp[i+3], dp[i+4]));
+        }
+        //compute the total value of coins
+        int sum = 0;
+        for (int a: values) {
+            sum += a;   
+        }
+        //compare your final value to the other player's
+        return dp[0] > sum - dp[0];
     }
-    int sum = 0;
-    for(int a:values)
-        sum +=a;
-    return dp[0] > sum - dp[0];
-}

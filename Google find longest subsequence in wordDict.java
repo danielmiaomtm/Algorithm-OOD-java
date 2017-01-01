@@ -4,11 +4,11 @@
 
 target = "czab"    dict : ["ab", "cab"]
 
-0 (c) 2  3   0  -1   1
-1 (z) 2  3  -1  -1   1
-2 (a) 2  3  -1  -1  -1
-3 (b) -1 3  -1  -1  -1
-
+0 (c)  2  3   0  -1   1
+1 (z)  2  3  -1  -1   1
+2 (a)  2  3  -1  -1  -1
+3 (b) -1  3  -1  -1  -1
+       a  b   c   d   z
 */
 
 public int maxSubsequence (List<String> dict, String target) {
@@ -41,7 +41,7 @@ public int maxSubsequence (List<String> dict, String target) {
 			if (pos == -1) {
 				break;
 			} 
-			pos = 
+		
 		}
 		maxLen = Math.max(maxLen, word.length());
 	}
@@ -73,8 +73,7 @@ public int longestSubsequence (String target, List<String> dict) {
 	TrieNode root = buildTrie(dict, len);
 	//generate pos map index : time: o(len of target)
 	this.arrs = new int[target.length()][26];
-	int maxLen = 0;
-
+	//pre-process target word
 	for (int i = target.length() - 1; i >= 0; i--) {
 		for (int j = 0; j < 26; j++) {
 			if (target.charAt(i) - 'a' == j) {

@@ -40,28 +40,28 @@ public int shortestPath (int[][] field, Node start, Node end) {
 	while (!queue.isEmpty()) {
 		Pair cur = queue.poll();
 
-		Node pos = cur.pos;
-		int dir = cur.dir;
-
-		numTurns = map.get(pos);
+		numTurns = map.get(cur.pos);
 
 		//if the cell in the direciton is empty
 		while (pos != end && helper(field, cur, dir)) {
+			cur.pos.x = pos.x + dir[cur.dir % 4][0];
+			cur.pos.y = pos.y + dir[cur.dir % 4][1]
 			continue;
 		}
-		Node newPos = new Node(pos.x + dir[cur.dir % 4][0], pos.y + dir[cur.dir % 4][1]);
+		
 		// find the end pos
-		if (newPos == end) {
+		if (cur.pos == end) {
 			return numTurns;
 		}
 
-		if (map.containsKey(newPos)) {
+		if (map.containsKey(cur.pos)) {
 			continue;
 		}
-		queue.offer(new Pair(newPos, dir + 1));
-		queue.offer(new Pair(newpOS, dir + 3));
 
-		map.put(newPos, numTurns + 1);
+		queue.offer(new Pair(cur.pos, cur.dir + 1));
+		queue.offer(new Pair(cur.pos, cur.dir + 3));
+
+		map.put(cur.pos, numTurns + 1);
 	}
 
 	return -1;
@@ -75,6 +75,6 @@ public boolean helper (int[][] filed, Pair cur, int[][] dir) {
 		|| y < 0 || y >= field[0].length || field[x][y] == 1) {
 		return false;
 	}
-
+	
 	return true;
 }

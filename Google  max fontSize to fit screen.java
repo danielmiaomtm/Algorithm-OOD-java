@@ -47,11 +47,13 @@ public boolean canFitWord (char[] chars, int width, int height, int fontSize) {
 		if (chars[i] == ' ') {
 			//go to next new line
 			if (w > leftWidth) {
+				//if the word is beyond the width, return;
 				if (w > width) {
 					return false;
 				}
 				leftWidth = width - w;
 				rowNum--;
+				//if there is no more new rows for words, return;
 				if (rowNum < 0) {
 					return false;
 				}

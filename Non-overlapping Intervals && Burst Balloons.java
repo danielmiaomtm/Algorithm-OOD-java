@@ -1,3 +1,4 @@
+根据end time 进行排序，然后再找到几个不overlapping的区间。
 /*
 Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
 

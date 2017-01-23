@@ -9,34 +9,35 @@ class Node {
     }
 }
 public int[] mergeKSortedArray(int[][] arr) {
-
+        
         PriorityQueue<Node> heap = new PriorityQueue<>(new Comparator<Node>(){
              public int compare (Node n1, Node n2) {
                 return n1.val - n2.val;
             }
         });
         
-        int total = 0;
-        //put first col
+        int totalLen = 0;
+        //put first col of each array into heap
         for (int i = 0; i < arr.length; i++) {
-            total += arr[i].length;
+            totalLen += arr[i].length;
             if (arr[i] != null && arr[i].length != 0) {
                 Node cur = new Node(arr[i][0], i, 0);
                 heap.offer(cur);
             }
         }
         
-        int[] result = new int[total];
+        int[] result = new int[totalLen];
         int index = 0;
         while (!heap.isEmpty()) {
             Node cur = heap.poll();
-            int x = cur.rowNum;
-            int y = cur.colNum;
-            if (y + 1 < arr[x].length) {
-                heap.offer(new Node(arr[x][y + 1], x, y + 1));
+            int row = cur.rowNum;
+            int col = cur.colNum;
+            if (col + 1 < arr[row].length) {
+                heap.offer(new Node(arr[row][col + 1], row, col + 1));
             }
 
             result[index++] = cur.val;
         }
+    
         return result;
     }

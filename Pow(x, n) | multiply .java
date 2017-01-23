@@ -1,15 +1,16 @@
-    double pow(double x, int n) {      
-        if (n == 0)
-            return 1.0;
-        if (x == 0)
-            return 0.0;
-        double half = pow(x,n/2);
-        if(n%2 == 0)
-            return half*half;
-        else if(n > 0)
-            return half*half*x;
-        else
-            return half*half/x;
+    
+    //n取负数会溢出
+    public double myPow(double x, int n) {
+        if (n == 0) return 1;
+        if (n < 0) {
+            if (n == Integer.MIN_VALUE) {
+                n++;
+                return 1/(myPow(x, Integer.MAX_VALUE)*x);
+            }
+            n = -n;
+            x = 1/x;
+        }
+        return (n%2 == 0) ? myPow(x*x, n/2): x*myPow(x*x, n/2);
     }
 
 

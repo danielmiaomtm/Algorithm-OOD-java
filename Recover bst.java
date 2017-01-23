@@ -17,6 +17,8 @@ public class Solution {
     		return;
     	}
     	
+        helper(root);
+        
     	if (second != null && first != null) {
     		swap(first, second);
     	}

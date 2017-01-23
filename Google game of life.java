@@ -1,8 +1,8 @@
 /*
-Any live cell with fewer than two live neighbors dies, as if caused by under-population. 
-Any live cell with two or three live neighbors lives on to the next generation. 
-Any live cell with more than three live neighbors dies, as if by over-population.. 
-Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction
+(< 2)    1 -> 0   Any live cell with fewer than two live neighbors dies, as if caused by under-population. 
+(2 || 3) 1 -> 1   Any live cell with two or three live neighbors lives on to the next generation. 
+(> 3)    1 -> 0   Any live cell with more than three live neighbors dies, as if by over-population.. 
+(3)      0 -> 1   Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction
 
 0 : 上一轮是0，这一轮过后还是0
 1 : 上一轮是1，这一轮过后还是1

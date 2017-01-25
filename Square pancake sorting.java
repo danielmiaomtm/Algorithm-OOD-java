@@ -7,7 +7,7 @@ flip(arr, i): Reverse array from 0 to i
 */
 
 o(n^2)
-public static int pancakeSort(int arr[], int n) {
+public static void pancakeSort(int arr[], int n) {
     // Start from the complete array and one by one
     // reduce current size by one
     for (int curr_size = n; curr_size > 1; --curr_size) {
@@ -27,7 +27,6 @@ public static int pancakeSort(int arr[], int n) {
             flip(arr, curr_size-1);
         }
     }
-    return 0;
 }
 
 static int findMax(int arr[], int n) {
@@ -63,5 +62,51 @@ void insertionSort(int arr[], int size){
             flip(arr, i);
             flip(arr, j);
         }
+    }
+}
+
+
+
+
+/*如果是[t,f,t,f,t] 同样的是swap(index),但是每一次还要反过来 swap(3) -> [f,t,f,t,t] -> [t,f,t,f,t]
+*/
+
+public void pancakeSort (boolean[] arr) {
+    int size = arr.length - 1;
+    for (int i = size; i >= 0; i--) {
+        if (arr[i] == true) {
+            continue;
+        } else {
+            if (arr[0] == false) {
+                swap(arr, i);
+            } else {
+                int pos = findNextTrue (arr, i);
+                swap(arr, pos);
+                if (arr[i] == true) {
+                    continue;
+                }
+                swap(arr, i);
+            }
+        }
+    }
+}
+public int findNextTrue (boolean[] arr, int end) {
+    int index = 0;
+    for (int i = 1; i <= end; i++) {
+        if (arr[i] == true) {
+            index = i;
+            break;
+        } 
+    }
+    return index;
+}
+public void swap(boolean[] arr, int index) {
+    int left = 0, right = index;
+    while (left < index) {
+        boolean temp = arr[left];
+        arr[left] = arr[index];
+        arr[index] = temp;
+        left++;
+        index--;
     }
 }

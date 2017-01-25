@@ -17,6 +17,7 @@ public class AddSquare {
         private TreeSet<Node> treeset;
         private float maxHeight;
         
+        // add the square into treeset by their x position
         public AddSquare() {
                 treeset = new TreeSet<Node>(new Comparator<Node>() {
                         public int compare(Node x, Node y) {
@@ -30,7 +31,7 @@ public class AddSquare {
                 maxHeight = 0;
         }
         
-        public void drop(float position, float size) {. From 1point 3acres bbs
+        public void drop(float position, float size) {
                 Node newnode = new Node(position, position + size, size);
                 Node left = getLeftBound(newnode);
                 Node right = getRightBound(newnode);

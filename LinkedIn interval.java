@@ -64,6 +64,15 @@ public interface IntervalLinkedIn {
     return totalLen;
   }
   
+
+
+
+
+
+
+
+
+
   // add Time O(1), get Time O(nlgn)
    List<int[]> list = new ArrayList<>();
    public void addInterval (int from, int to) {

@@ -1,7 +1,9 @@
 // no duplicates Insert Delete GetRandom o(1)
 public class RandomizedSet {
 
+    // val-pos
     Map<Integer, Integer> map1;
+    //pos - val
 	Map<Integer, Integer> map2;
 	Random rand;
  	public RandomizedSet() {

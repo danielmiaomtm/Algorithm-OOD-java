@@ -108,3 +108,33 @@ public void helper (List<NestedInteger> nestedList, int depth, Map<Integer, Inte
 	}
 	return max;
 }
+
+
+
+
+
+
+public int depthSumInverse(List<NestedInteger> nestedList) {
+         
+         if (nestedList == null || nestedList.size() == 0) {
+             return 0;
+         }
+         int sum = 0;
+         
+         int unweightedSum = 0, weightedSum = 0;
+        
+         while (!nestedList.isEmpty()) {
+            List<NestedInteger> nextList = new ArrayList<>();
+             for (NestedInteger nest : nestedList) {
+                 if (nest.isInteger()) {
+                    unweightedSum += nest.getInteger();        
+                 } else {
+                    nextList.addAll(nest.getList());
+                 }
+             }
+             weightedSum += unweightedSum;
+             nestedList = nextList;
+         }
+         return weightedSum;
+}
+

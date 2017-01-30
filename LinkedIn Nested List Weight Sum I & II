@@ -8,6 +8,7 @@ Given the list [[1,1],2,[1,1]], return 10. (four 1's at depth 2, one 2 at depth 
 
 */
 
+//iteration
 public int depthSum(List<NestedInteger> nestedList) {
     int sum=0;
  
@@ -36,6 +37,26 @@ public int depthSum(List<NestedInteger> nestedList) {
     return sum;
 }
 
+
+//recursion
+public int depthSum(List<NestedInteger> nestedList) {
+	if (nestedList == null || nestedList.size() == 0) {
+	    return 0;
+	}
+	return helper(nestedList, 1);
+	}
+	public int helper (List<NestedInteger> nestedList, int depth) {
+
+	int result = 0;
+	for (NestedInteger n : nestedList) {
+	    if (n.isInteger()) {
+		result += n.getInteger() * depth;
+	    } else {
+		result += helper(n.getList(), depth + 1);
+	    }
+	}
+	return result;
+}
 
 
 

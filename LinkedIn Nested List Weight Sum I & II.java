@@ -113,7 +113,7 @@ public void helper (List<NestedInteger> nestedList, int depth, Map<Integer, Inte
 
 
 
-
+// much simpler version
 public int depthSumInverse(List<NestedInteger> nestedList) {
          
          if (nestedList == null || nestedList.size() == 0) {

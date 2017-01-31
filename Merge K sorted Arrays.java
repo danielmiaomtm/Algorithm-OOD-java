@@ -1,3 +1,7 @@
+//Time O(nlgn)
+//Space: O(rowNum);
+
+
 class Node {
     int rowNum;
     int val;

@@ -9,33 +9,37 @@ class Elem{
     public Elem next;
     public Elem pre;
  
-    public Elem(int value, int min){
+    public Elem(int value){
         this.value = value;
-        this.max = min;
+        this.max = null;
         this.next = null;
         this.pre = null;
     }
 }
  
-public class MinStack {
+public class MaxStack {
     public Elem head;
- 	public Elem node;
+ 	public Elem max;
     /** initialize your data structure here. */
     public MinStack() {
  		this.head = null;
-    	this.node = head;
+    	this.max = null;
     }
  
     public void push(int x) {
-        if (node == null){
-            node = new Elem(x, x);
-            node.max = head;
+        if (head == null){
+            head = new Elem(x);
+            max = head;
         }else{
-            Elem e = new Elem(x, Math.max(x, node.min));
-            node.max = x < node.min ? e : node;
-            e.next = node;
-            node.pre = e;
-            node = e;
+            Elem node = new Elem(x));
+            node.pre = head;
+            head.next = node;
+            if (node.val >= max.val) {
+                node.max = node;
+                max = node;
+            } else {
+                
+            }
         }
  
     }

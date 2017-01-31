@@ -1,3 +1,4 @@
+//kmp基本算法，找到相同的点
 private int[] computeTemporaryArray(char pattern[]){
         int [] lps = new int[pattern.length];
         int index =0;

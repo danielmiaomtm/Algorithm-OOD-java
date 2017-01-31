@@ -1,3 +1,27 @@
+public int[] mergeTwoArray (int[] num1, int[] num2) {
+    int i1 = 0, i2 = 0;
+    int[] nums = new int[num1.length + num2.length - 1];
+    while (i1 < num1.length && i2 < num2.length) {
+
+        if (num1[i1] < num2[i2]) {
+            nums[i1 + i2] = num1[i1++];
+        } else {
+            nums[i1 + i2] = num2[i2++];
+        }
+
+    }
+    // i1或者i2多加了一次
+    while (i1 < num1.length) {
+        nums[i1 + i2 - 1] = num1[i1++];
+    }
+    while (i2 < num2.length) {
+        nums[i1 + i2 - 1] = num2[i2++];
+    }
+    return nums;
+}
+
+
+
 //Time O(nlgn)
 //Space: O(rowNum);
 

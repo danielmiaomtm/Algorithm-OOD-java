@@ -1,5 +1,6 @@
 /*
 maxStack using doubleLinkedList peekMax(), popMax();
+pop peek peekMax popMax, popMax要求O(1) 
 */
 
 class Elem{

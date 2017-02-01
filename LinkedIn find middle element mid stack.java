@@ -88,3 +88,105 @@ public class StackToFindMiddle {
                 }
         }
 }
+
+
+
+
+
+
+
+
+class DLLNode{
+	DLLNode pre;
+	DLLNode next;
+	int val;
+	DLLNode (int val) {
+		this.val = val;
+		this.pre = null
+		this.next = null;
+	}
+}
+public maxStack {
+	DLLNode head;
+	DLLNode middle;
+	int size;
+	maxStack () {
+		this.head = null;
+		this.middle = null;
+		this.size == 0
+	}
+ 
+ 
+	public void insert (int target) {
+		if (head == null) {
+			head = new DLLNode(target);
+			middle = head;
+		} else {
+			DLLNode node = new DLLNode(target);
+			head.next = node;
+			node.pre = head;
+			head = node;
+			// when size is odd, middle shift to next
+			if (size % 2 == 0) {
+				middle = middle.next;
+			}
+   size++;
+		}
+	}
+	
+ 
+	public int pop () {
+     if (head == null) {
+      return -1;
+     }
+     int result = head.val;
+     DLLNode pre = head.pre;
+     //only one node exists
+     if (pre == null) {
+      head = null;
+      middle = null;
+      return result;
+     } 
+     // when size is odd, middle shift to left
+     head = pre;
+     head.next = null;
+     if (size % 2 != 0) {
+      middle = middle.pre;
+     }
+     size--;
+     return result;
+	}
+ 
+ 
+ public int findMid () {
+     if (middle == nul) {
+      return -1;
+     }
+     return middle.val;
+ }
+ 
+ 
+	public int popMid () {
+     if (middle == null) {
+      return -1;
+     }
+     // if only one node exists
+     int result = middle.val;
+     if (middle.pre == null && middle.next == null) {
+      head = null;
+      middle = null;
+      return result;
+     }
+
+     middle.pre.next = middle.next;
+     middle.next.pre = middle.pre;
+     if (size % 2 != 0) {
+      middle = middle.pre;
+     } else {
+      middle = middle.next;
+     }
+     size--;
+     return result;
+    }
+
+}

@@ -130,31 +130,31 @@ public maxStack {
 			if (size % 2 == 0) {
 				middle = middle.next;
 			}
-   size++;
+   			size++;
 		}
 	}
 	
  
 	public int pop () {
-     if (head == null) {
-      return -1;
-     }
-     int result = head.val;
-     DLLNode pre = head.pre;
-     //only one node exists
-     if (pre == null) {
-      head = null;
-      middle = null;
-      return result;
-     } 
-     // when size is odd, middle shift to left
-     head = pre;
-     head.next = null;
-     if (size % 2 != 0) {
-      middle = middle.pre;
-     }
-     size--;
-     return result;
+	     if (head == null) {
+	      return -1;
+	     }
+	     int result = head.val;
+	     DLLNode pre = head.pre;
+	     //only one node exists
+	     if (pre == null) {
+	      head = null;
+	      middle = null;
+	      return result;
+	     } 
+	     // when size is odd, middle shift to left
+	     head = pre;
+	     head.next = null;
+	     if (size % 2 != 0) {
+	      middle = middle.pre;
+	     }
+	     size--;
+	     return result;
 	}
  
  
@@ -166,7 +166,7 @@ public maxStack {
  }
  
  
-	public int popMid () {
+public int popMid () {
      if (middle == null) {
       return -1;
      }

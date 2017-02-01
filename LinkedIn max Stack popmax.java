@@ -14,43 +14,39 @@ class DLLNode{
 	DLLNode pre;
 	DLLNode next;
 	int val;
-	int index;
-	DLLNode (int val, int index) {
+	DLLNode (int val) {
 		this.val = val;
 		this.pre = null
 		this.next = null;
-		this.index = index;
 	}
 }
 
 class maxStack {
 	DDLNode head;
-	int index;
 	PriorityQueue<DDLNode> heap;
 	maxStack () {
-		this.index = 0;
 		this.head = null;
-		this.heap = new PriorityQueue<>(new Comparator<DLLNode> () {
-			public int compare (DDLNode n1, DDLNode n2) {
-				if (n1.val == n2.val) {
-					// index decending
-					return n2.index - n1.index;
-				}
-				// decending
-				return n2.val - n1.val;
-			}
-		});
+		this.heap = new PriorityQueue<>(11,new Comparator<DLLNode> () {
+		@Override
+		public int compare (DLLNode n1, DLLNode n2) {
+//			if (n1.val == n2.val) {
+//				// index decending
+//				return n2.index - n1.index;
+//			}
+			// decending
+			return n2.val - n1.val;
+		}
+	});
 	}
 	public void insert (int num) {
 		if (head == null) {
-			head = new DDLNode(num, index);
+			head = new DLLNode(num);
 		} else {
-			DDLNode node = new DDLNode(num, index);
+			DLLNode node = new DLLNode(num);
 			head.next = node;
 			node.pre = head;
 			head = node;
 		}
-		index++;
 		heap.offer(head);
 	}
 
@@ -58,30 +54,44 @@ class maxStack {
 		if (head == null) {
 			return -1;
 		}
+		return heap.peek().val;
 	}
 	public int popMax () {
 		if (head == null) {
 			return -1;
 		}
-		DDLNode max = heap.poll();
-		index--;
+		DLLNode max = heap.peek();
 		if (heap.isEmpty()) {
 			head = null;
 			return max.val;
 		}
-		max.pre.next = max.next;
-		max.next.pre = max.pre;
-
+		// if there is only one node
+		if (heap.peek().next == null && heap.peek().pre == null) {
+			head = null;
+		} else if (heap.peek().next == null) {
+			// max in the tail
+			heap.peek().pre.next = null;
+			head = heap.peek().pre;
+		} else if (heap.peek().pre == null) {
+			// max in the head
+			heap.peek().next.pre = null;
+		} else {
+			heap.peek().pre.next = heap.peek().next;
+			heap.peek().next.pre = heap.peek().pre;			
+		}
+		heap.poll();
+		
+		return max.val;
 	}
+	
 	public int pop() {
 		if (head == null) {
 			return -1;
 		}
 		int result = head.val;
-		DDLNode node = head.pre;
+		DLLNode node = head.pre;
 
 		heap.remove(head);
-		index--;
 
 		if (node == null) {
 			head = null;
@@ -91,5 +101,6 @@ class maxStack {
 		head.next = null;
 		return result;
 	}
+
 }
 

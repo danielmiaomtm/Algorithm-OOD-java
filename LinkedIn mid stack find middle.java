@@ -31,11 +31,11 @@ class DLLNode{
 		this.next = null;
 	}
 }
-public maxStack {
+public midStack {
 	DLLNode head;
 	DLLNode middle;
 	int size;
-	maxStack () {
+	midStack () {
 		this.head = null;
 		this.middle = null;
 		this.size == 0

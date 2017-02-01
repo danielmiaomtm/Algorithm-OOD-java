@@ -18,7 +18,9 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
 */
 
-
+// first goes to left, set root
+// set left-> parent.right, right -> parent
+// root is root.right
 
 //iteration
 public TreeNode upsideDownBinaryTree(TreeNode root) {
@@ -37,16 +39,21 @@ public TreeNode upsideDownBinaryTree(TreeNode root) {
 
 
 //recursion
+
+/*
+        2
+   null   3     return 2;
+*/
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null)) {
+        if (root == null || root.left == null || (root.left == null && root.right == null)) {
             return root;
         }
         TreeNode newRoot = upsideDownBinaryTree(root.left);
         
         root.left.left = root.right;
         root.left.right = root;
-        
+        //clean the root;
         root.left = null;
         root.right = null;
         

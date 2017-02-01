@@ -63,7 +63,7 @@ class maxStack {
 		if (head == null) {
 			return -1;
 		}
-		DDLNode max = heap.pop();
+		DDLNode max = heap.poll();
 		index--;
 		if (heap.isEmpty()) {
 			head = null;

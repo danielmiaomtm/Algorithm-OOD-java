@@ -22,22 +22,6 @@ confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on
 // set left-> parent.right, right -> parent
 // root is root.right
 
-//iteration
-public TreeNode upsideDownBinaryTree(TreeNode root) {
-    TreeNode node = root, parent = null, right = null;  
-    while (node != null) {  
-        TreeNode left = node.left;  
-        node.left = right;  
-        right = node.right;  
-        node.right = parent;  
-        parent = node;  
-        node = left;  
-    }  
-    return parent;  
-}
-
-
-
 //recursion
 
 /*
@@ -61,3 +45,20 @@ public class Solution {
     }
     
 }
+
+
+
+//iteration
+public TreeNode upsideDownBinaryTree(TreeNode root) {
+    TreeNode node = root, parent = null, right = null;  
+    while (node != null) {  
+        TreeNode left = node.left;  
+        node.left = right;  
+        right = node.right;  
+        node.right = parent;  
+        parent = node;  
+        node = left;  
+    }  
+    return parent;  
+}
+

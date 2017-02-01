@@ -1,5 +1,5 @@
 
-// query many times
+// query many times 重复请求很多次
 public class WordDistance {
     private Map<String, List<Integer>> map;
     // store all the pos to map
@@ -38,7 +38,7 @@ public class WordDistance {
 }
 
 
-// if not same two words
+// if not same two words， 两个词不一样
 public class Solution {
     public int shortestDistance(String[] words, String word1, String word2) {
         if (words == null || words.length < 2) {
@@ -56,12 +56,12 @@ public class Solution {
                 minLen = Math.min(minLen, Math.abs(left - right));
             }
         }
-        return minLen;
+        return minLen == Integer.MAX_VALUE ? -1 : minLen;
     }
 }
 
 
-// if two words could be same
+// if two words could be same， 两个词可以一样
 public class Solution {
     public int shortestWordDistance(String[] words, String word1, String word2) {
         boolean appeared = false;

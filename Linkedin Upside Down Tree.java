@@ -20,7 +20,7 @@ confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on
 
 
 
-
+//iteration
 public TreeNode upsideDownBinaryTree(TreeNode root) {
     TreeNode node = root, parent = null, right = null;  
     while (node != null) {  
@@ -36,7 +36,7 @@ public TreeNode upsideDownBinaryTree(TreeNode root) {
 
 
 
-
+//recursion
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || (root.left == null && root.right == null)) {

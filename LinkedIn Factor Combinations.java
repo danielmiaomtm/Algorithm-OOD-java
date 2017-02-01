@@ -41,6 +41,7 @@ public class Solution {
          if (n <= 1) {
              return result;
          }
+         result.add(new ArrayList<>(Arrays.asList(1, n)));
          List<Integer> list = new ArrayList<>();
          helper(result, list, n, 2);
          return result;

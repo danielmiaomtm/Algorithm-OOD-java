@@ -12,10 +12,11 @@ public class TwoSum {
     }
 
     public boolean find(int value) {
+        
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            int i = entry.getKey();
-            int j = value - i;
-            if ((i == j && entry.getValue() > 1) || (i != j && map.containsKey(j))) {
+            int num1 = entry.getKey();
+            int num2 = value - num1;
+            if ((num1 == num2 && entry.getValue() > 1) || (num1 != num2 && map.containsKey(num2))) {
                 return true;
             }
         }

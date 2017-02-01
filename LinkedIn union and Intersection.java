@@ -84,3 +84,52 @@ public List<List<Integer>> unionAndIntersection (int[] num1, int[] num2) {
 	    result.add(new ArrayList<>(inter));
 	    return result;
 	}
+
+
+
+
+
+
+
+
+
+// iterator 
+public static Iterable<Integer> intersection(Iterator<Integer> a, Iterator<Integer> b) {
+	List<Integer> intersection = new ArrayList<>();
+	List<Integer> union = new ArrayList<>();
+
+	Integer currA = a.hasNext() ? a.next() : null;
+	Integer currB = b.hasNext() ? b.next() : null;
+
+	while (currA != null && currB != null) {
+	    if (currA.intValue() == currB.intValue()) {
+		
+		intersection.add(currA);
+		union.add(currA);
+		
+		currA = a.hasNext() ? a.next() : null;	                	                
+		currB = b.hasNext() ? b.next() : null;
+
+	    } else if (currA.intValue() < currB.intValue()) {
+		
+		union.add(currA);
+		
+		currA = a.hasNext() ? a.next() : null;
+	    } else {
+		union.add(currB);
+		currB = b.hasNext() ? b.next() : null;
+	    }
+	}
+	
+	while (currA != null) {
+		union.add(currA);
+		currA = a.hasNext() ? a.next() : null;
+	}
+	while (currB != null) {
+		union.add(currB);
+		currB = b.hasNext() ? b.next() : null;
+	}
+	return union;
+}
+
+

@@ -1,11 +1,12 @@
 public List<Integer> printPrime (int n) {
     List<Integer> result = new ArrayList<>();
+    // primes starts from 2
     if (n < 2) {
       return result;
     }
 
     boolean[] primes = new boolean[n + 1];
-    Arrays.fill(primes, false);
+
     for (int i = 2; i <= n; i++) {
       if (primes[i]) {
         continue;
@@ -16,7 +17,6 @@ public List<Integer> printPrime (int n) {
     }
 
     for (int i = 2; i <= n; i++) {
-
       if (!primes[i]) {
         result.add(i);
       }

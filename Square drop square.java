@@ -102,7 +102,7 @@ class Solution {
     // [x.a  x.b]   [y.a  y.b]
     // [y.a  y.b]   [x.a  x.b]
     //greater
-    return !(y.a - x.b > 1e-10) && !(x.a - y.b > 1e-10);
+    return !(y.a - x.b > 1e-10) && !(x.a - y.b > 1e-10) && !(x.b == y.a) && !(y.b == x.a);;
     
   }
 

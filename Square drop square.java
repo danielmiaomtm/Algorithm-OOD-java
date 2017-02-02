@@ -73,10 +73,6 @@ class Solution {
     //update the maxHeight
     maxHeight = Math.max(maxHeight, size + curMaxHeight);
   }
-
-  public float getHeight() {
-    return maxHeight;
-  }
   
   private Node getLeftBound(Node n) {
     Node smaller = treeset.lower(n);
@@ -110,6 +106,10 @@ class Solution {
     
   }
 
+  
+   public float getHeight() {
+    return maxHeight;
+  }
   
   public static void main(String[] args) {
     Solution test = new Solution();

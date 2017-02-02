@@ -13,6 +13,7 @@
 
 		for (int i = index; i < input.size(); i++) {
 			// if there is duplicates one, skip
+			// i != index, means if it is the first time visited add into list, otherwise it should skip
 			if (i != index && input.get(i) == input.get(i - 1)) {
 				continue;
 			}

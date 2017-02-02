@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 class Solution {
-  //private class to protect the parameter 
+  
   private static class Node {
     private float a;
     private float b;
@@ -48,6 +48,7 @@ class Solution {
       maxHeight = Math.max(maxHeight, size);
       return;
     }
+    
     //update curMaxHeight between leftBound and rightBound
     float curMaxHeight = left.h;
     Node cur = left;
@@ -57,6 +58,7 @@ class Solution {
       treeset.remove(cur);
       cur = tmp;
     }
+    
     curMaxHeight = Math.max(curMaxHeight, right.h);
     treeset.remove(right);
     //update the treeset 
@@ -101,8 +103,8 @@ class Solution {
   private boolean overlap(Node x, Node y) {
     // [x.a  x.b]   [y.a  y.b]
     // [y.a  y.b]   [x.a  x.b]
-    //greater
-    return !(y.a - x.b > 1e-10) && !(x.a - y.b > 1e-10) && !(x.b == y.a) && !(y.b == x.a);;
+    // or equals
+    return !(y.a - x.b > 1e-10) && !(x.a - y.b > 1e-10);
     
   }
 
@@ -110,6 +112,8 @@ class Solution {
    public float getHeight() {
     return maxHeight;
   }
+    
+    
   
   public static void main(String[] args) {
     Solution test = new Solution();

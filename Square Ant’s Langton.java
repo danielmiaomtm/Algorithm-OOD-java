@@ -9,44 +9,44 @@ public class Main {
     private static int x;
     private static int y;
 
-    private static int [][]a = new int[100][100];
+    private static int[][] a = new int[100][100];
 
     //当前方向
     private static int direction = 0;
 
     public static void main(String[] args) {
 
-    Scanner cin = new Scanner(System.in);
-    int m,n;
+        Scanner cin = new Scanner(System.in);
+        int m,n;
 
-    m = cin.nextInt();
-    n = cin.nextInt();
+        m = cin.nextInt();
+        n = cin.nextInt();
 
-    for(int i=0;i<m;i++)
-    for(int j=0;j<n;j++)
-    {
-    a[i][j] = cin.nextInt();
-    }
+        for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
+        {
+        a[i][j] = cin.nextInt();
+        }
 
-    x = cin.nextInt();
-    y = cin.nextInt();
+        x = cin.nextInt();
+        y = cin.nextInt();
 
-    //将方向设置为数字  方向 U R D L
-    String dirtemp = cin.next();
-    if(dirtemp.equals("R"))
-    direction = 1;
-    else if(dirtemp.equals("D"))
-    direction = 2;
-    else if(dirtemp.equals("L"))
-    direction = 3;
+        //将方向设置为数字  方向 U R D L
+        String dirtemp = cin.next();
+        if(dirtemp.equals("R"))
+        direction = 1;
+        else if(dirtemp.equals("D"))
+        direction = 2;
+        else if(dirtemp.equals("L"))
+        direction = 3;
 
-    //步数
-    int k = cin.nextInt();
+        //步数
+        int k = cin.nextInt();
 
-    for(int i=0;i<k;i++)
-    move();
+        for(int i=0;i<k;i++)
+        move();
 
-    System.out.print(x+" "+y);
+        System.out.print(x+" "+y);
     }
 
 

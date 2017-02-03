@@ -24,6 +24,7 @@ class Solution {
   private List<Node> list;
   private double maxHeight;
   private PriorityQueue<Node> heap;
+  
   //constructor 
   public Solution() {
     //sort decendingly by x
@@ -97,6 +98,10 @@ class Solution {
           } else if (n.start < rightBound && rightBound > n.end && n.end > leftBound) {
             rightUncovered = new Node(n.end, rightBound, height);
           } 
+
+          //   cur      |____|
+          //    n |_____|    |____|
+          
           // update height if there exist covered not hit the the same edge
           if (n.end != leftBound && n.start != rightBound) {
             // update the added cur heights
@@ -117,17 +122,17 @@ class Solution {
       nextList.add(rightUncovered);
     }
    
-    System.out.println("*************");
+    // System.out.println("*************");
     for (Node n : nextList) {
         // System.out.println("leftBound   " + leftBound);
         // System.out.println("rightBound  " + rightBound);
       
-      
+      //if inside the new range, remove them
       if ((leftBound <= n.start && n.end < rightBound) 
           || (leftBound < n.start && n.end <= rightBound)) {
         //System.out.println("正确的node  " + n.start + " " + n.end + " " + n.height);
       } else {
-        System.out.println("node  " + n.start + " " + n.end + " " + n.height);
+        // System.out.println("node  " + n.start + " " + n.end + " " + n.height);
         heap.offer(n);
       }
       

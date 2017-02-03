@@ -1,134 +1,163 @@
-/*
-就是实现drop(double x, double size) 和getHeight(double x)
-*/
-
-
 import java.io.*;
 import java.util.*;
+
+/*
+ * To execute Java, please define "static void main" on a class
+ * named Solution.
+ *
+ * If you need more classes, simply define them inline.
+ */
 
 class Solution {
   
   private static class Node {
-    private float a;
-    private float b;
-    private float h;
-    public Node(float a, float b, float h) {
-      this.a = a;
-      this.b = b;
-      this.h = h;
+    private double start;
+    private double end;
+    private double height;
+    public Node(double start, double end, double height) {
+      this.start = start;
+      this.end = end;
+      this.height = height;
     }
   }
   
-  private TreeSet<Node> treeset;
-  private float maxHeight;
-  
+  private List<Node> list;
+  private double maxHeight;
+  private PriorityQueue<Node> heap;
   //constructor 
   public Solution() {
     //sort decendingly by x
-    treeset = new TreeSet<Node>(new Comparator<Node>() {
+    list = new ArrayList<Node>();
+    heap = new PriorityQueue<>(11, new Comparator<Node>() {
       public int compare(Node x, Node y) {
-        float diff = x.a - y.a;
+        double diff = x.start - y.start;
         if (Math.abs(diff) < 1e-10) {
           return 0;
         }
-        return x.a < y.a ? -1 : 1;
+        return x.start - y.start < 0 ? -1 : 1;
       }
     });
+    
     maxHeight = 0;
   }
 
-  public void drop(float position, float size) {
-    Node newnode = new Node(position, position + size, size);
+  public void drop (double x, double height) {
     
-    Node left = getLeftBound(newnode);
-    Node right = getRightBound(newnode);
-    
-    if (left == null && right == null) {
-      treeset.add(newnode);
-      maxHeight = Math.max(maxHeight, size);
+    if (heap.isEmpty()) {
+      heap.offer(new Node(x, x + height, height));
+      maxHeight = height;
       return;
     }
     
-    //update curMaxHeight between leftBound and rightBound
-    float curMaxHeight = left.h;
-    Node cur = left;
-    while (cur != right) {
-      Node tmp = treeset.higher(cur);
-      curMaxHeight = Math.max(curMaxHeight, cur.h);
-      treeset.remove(cur);
-      cur = tmp;
+
+    List<Node> nextList = new ArrayList<>();
+    
+    double curHeight = height;
+    double leftBound = x, rightBound = x + height;
+    Node leftUncovered = null, rightUncovered = null;
+    Boolean firstLeft = true;
+    
+    
+    while (!heap.isEmpty()) {
+      
+      Node n = heap.poll();
+        // if not covered by current range
+      
+        if (n.end < leftBound || n.start >= rightBound) {
+          
+          nextList.add(n);
+          
+        } else {
+          
+          // add covered area
+                    //包含关系
+          // cur   |_____|         |_________|
+          //  n  |__________|    |___|
+          
+          //不包含
+          // cur   |__________|     |_______|
+          //  n      |____|            |______|
+          
+          //   cur      |____|
+          //    n |_____|    |____|
+          
+         
+          //left uncovered range
+          if (firstLeft && n.start < leftBound) {
+            leftUncovered = new Node(n.start, leftBound, n.height);
+            firstLeft = !firstLeft;
+          } else if (firstLeft && leftBound < n.start) {
+            leftUncovered = new Node(leftBound,n.start, height);
+            firstLeft = !firstLeft;
+          } 
+          
+          //right uncovered range
+         if (n.start < rightBound && rightBound < n.end && n.end > leftBound) {
+            rightUncovered = new Node(rightBound, n.end, n.height);
+          } else if (n.start < rightBound && rightBound > n.end && n.end > leftBound) {
+            rightUncovered = new Node(n.end, rightBound, height);
+          } 
+          // update height if there exist covered not hit the the same edge
+          if (n.end != leftBound && n.start != rightBound) {
+            // update the added cur heights
+            curHeight = Math.max(curHeight, height + n.height);
+            maxHeight = Math.max(maxHeight, curHeight);
+          }
+          
+          
+        }
+      
     }
     
-    curMaxHeight = Math.max(curMaxHeight, right.h);
-    treeset.remove(right);
-    //update the treeset 
-    // reserve the uncovered leftBound and rightBound height
-    if (left.a < newnode.a) { 
-      treeset.add(new Node(left.a, newnode.a, left.h));
+    nextList.add(new Node(leftBound, rightBound, curHeight));
+    if (leftUncovered != null) {
+      nextList.add(leftUncovered);
     }
-    if (newnode.b < right.b) {
-      treeset.add(new Node(newnode.b, right.b, right.h));
+    if (rightUncovered != null) {
+      nextList.add(rightUncovered);
     }
-    //update the new coverd area
-    treeset.add(new Node(newnode.a, newnode.b, size + curMaxHeight));
+   
+    System.out.println("*************");
+    for (Node n : nextList) {
+        // System.out.println("leftBound   " + leftBound);
+        // System.out.println("rightBound  " + rightBound);
+      
+      
+      if ((leftBound <= n.start && n.end < rightBound) 
+          || (leftBound < n.start && n.end <= rightBound)) {
+        //System.out.println("正确的node  " + n.start + " " + n.end + " " + n.height);
+      } else {
+        System.out.println("node  " + n.start + " " + n.end + " " + n.height);
+        heap.offer(n);
+      }
+      
+    }
+        
     
-    //update the maxHeight
-    maxHeight = Math.max(maxHeight, size + curMaxHeight);
   }
   
-  private Node getLeftBound(Node n) {
-    Node smaller = treeset.lower(n);
-    
-    if (smaller != null && overlap(smaller, n)) {
-      return smaller;
-    }
-    
-    Node larger = treeset.ceiling(n);
-    if (larger != null && overlap(larger, n)) {
-      return larger;
-    }
-    
-    return null;
-  }
-
-  private Node getRightBound(Node n) {
-    Node dummy = new Node(n.b, n.b, n.h);
-    Node smaller = treeset.floor(dummy);
-    if (smaller != null && overlap(smaller, n)) {
-      return smaller;
-    }
-    return null;
-  }
-
-  private boolean overlap(Node x, Node y) {
-    // [x.a  x.b]   [y.a  y.b]
-    // [y.a  y.b]   [x.a  x.b]
-    // or equals
-    return !(y.a - x.b > 1e-10) && !(x.a - y.b > 1e-10);
-    
-  }
-
-  
-   public float getHeight() {
+   public double getHeight() {
     return maxHeight;
   }
     
     
-  
+    
+    
+ 
   public static void main(String[] args) {
     Solution test = new Solution();
-    test.drop(1,4);
-    System.out.println(test.getHeight());
-    test.drop(-1,2);
-    System.out.println(test.getHeight());
-    test.drop(-1,3);
-    System.out.println(test.getHeight());
-    test.drop(5.5f, 3);
-    System.out.println(test.getHeight());
+    test.drop(0,4);
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
+    test.drop(4,3);
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
+    test.drop(3,3);
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
+    test.drop(-0.5f, 6.5f);
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
     test.drop(10, 5);
-    System.out.println(test.getHeight());
-    test.drop(-1, 6.5f);
-    System.out.println(test.getHeight());
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
+    test.drop(5.5f, 3);
+    System.out.println("maxHeight  " + test.getHeight() + '\n');
   }
   
   

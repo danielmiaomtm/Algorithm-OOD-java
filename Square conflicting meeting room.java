@@ -6,13 +6,6 @@ get a list of conflicting time for meetings, 有点类似leetcode 的meeting roo
 import java.io.*;
 import java.util.*;
 
-/*
- * To execute Java, please define "static void main" on a class
- * named Solution.
- *
- * If you need more classes, simply define them inline.
- */
-
 class conflicts {
   int start;
   int end;
@@ -37,24 +30,21 @@ class Node {
 }
 
 class Solution {
-  
-
-  
+ 
   //int[] meeting = [start, end, id];
     
   public List<conflicts> conflictingMeetrings (int[][] input) {
 
     PriorityQueue<Node> heap = new PriorityQueue<>(11, new Comparator<Node>() {
         public int compare(Node a, Node b) { 
-        //先把end放前面减去
+        //先把end放前面，先减去，再加入
             if (a.time == b.time){
                 return b.pos - a.pos;
             }
             return a.time - b.time;
         }
     });
-    
-    
+        
     for (int[] meeting : input) {
       heap.offer(new Node(0, meeting[0], meeting[2]));
       heap.offer(new Node(1, meeting[1], meeting[2]));
@@ -93,8 +83,7 @@ class Solution {
             ite.remove();
           }
         }
-        
-        
+                
       }
       
       pos.add(cur.time);

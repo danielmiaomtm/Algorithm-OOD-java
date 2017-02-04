@@ -16,68 +16,45 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner cin = new Scanner(System.in);
-        int m,n;
+        int[][] board = new int[][]{{1,0,0},
+				 				     {0,0,0}, 
+				 				     {1,1,1},
+				 				     {0,0,0}};  
+		 
+		 sol.move(1, 1, 2, board, 5);      
+	     for (int[] b : board) {
+	    	 System.out.println(Arrays.toString(b));
+	     }
 
-        m = cin.nextInt();
-        n = cin.nextInt();
-
-        for(int i=0;i<m;i++)
-        for(int j=0;j<n;j++)
-        {
-        a[i][j] = cin.nextInt();
-        }
-
-        x = cin.nextInt();
-        y = cin.nextInt();
-
-        //将方向设置为数字  方向 U R D L
-        String dirtemp = cin.next();
-        if(dirtemp.equals("R"))
-        direction = 1;
-        else if(dirtemp.equals("D"))
-        direction = 2;
-        else if(dirtemp.equals("L"))
-        direction = 3;
-
-        //步数
-        int k = cin.nextInt();
-
-        for(int i=0;i<k;i++)
-        move();
-
-        System.out.print(x+" "+y);
     }
 
 
-    // 移动的方法
-    public static void move() {
-        //如果是白的，则左转
-        if(a[x][y] == 0) {
-          direction = (direction - 1) ;
-          if(direction < 0) {
-            direction += 4;
-          }
-          a[x][y] = 1;
-        } else if(a[x][y] == 1) {
-          //如果是黑的则右转
-          direction = (direction + 1)%4;
-          a[x][y] = 0;
-        }
-
-        switch(direction) {
-        case 0:
-          x--;
-          break;
-        case 1:
-          y++;
-          break;
-        case 2:
-          x++;
-          break;
-        case 3:
-          y--;
-          break;
-        }
+  // 移动的方法
+	// up(0), left(1), down(2), right(3)
+    int[][] dir = new int[][]{{-1, 0},{0,-1},{1,0},{0,1}};
+    
+    public void move(int row, int col, int dire, int[][] board, int step) throws Exception {
+    	while (step > 0) {
+    		if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
+    			return;
+    		}
+    		System.out.println("row " + row);
+    		System.out.println("col " + col);
+    		 //如果是白的，则右转    		
+            if(board[row][col] == 0) {
+            	dire = ((dire - 1) + 4) % 4;
+                board[row][col] = 1;
+            } else {
+              //如果是黑的则左转
+            	dire = (dire + 1) % 4;
+                board[row][col] = 0;
+            }
+            row += dir[dire][0];
+            col += dir[dire][1];
+            System.out.println("newRow " + row);
+    		System.out.println("newCol " + col);
+            step--;
+    	}
+        
     }
 }

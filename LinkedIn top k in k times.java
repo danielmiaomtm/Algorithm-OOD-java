@@ -1,3 +1,7 @@
+ top 10 logs in last 60 min. Design the entire product, from how to get log data to how to show it in UI.
+   
+   
+
 是entry level。其实我也不确定我答得算不算好。先确定data 多大，面试官说1000种exception（我之前题目介绍没说清楚，是top 10 的exception），
 从很多的server取数据，忘了多少了。然后先简单化问题，如何存和算过去60分钟的exception，问了一下时间的granularity，说是min，
 那我就对于每个exception用一个cyclic array 60长度，然后每次time%60来increase对应的count。另外用一个变量存下last t/60，来判断是否该该归零。

@@ -130,3 +130,68 @@ public void dfs(List<List<String>> res, List<String> cur, Map<String, Integer> d
         }
     }
 }
+
+
+
+
+
+//用trie优化
+struct TrieNode{
+    unordered_map<char, TrieNode*> children;
+};
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
+        if(beginWord == endWord) return 2;
+        unordered_set<string> visited;
+        queue<string> que;
+        int len = 1;
+        que.push(beginWord);
+        visited.insert(beginWord);
+        TrieNode *root = buildTrie(wordList);
+        
+        while(!que.empty()){
+            int size = que.size();
+            for(int i = 0; i < size; ++i){
+                string curWord = que.front();
+                que.pop();
+                TrieNode *curNode = root;
+                for(int j = 0; j < curWord.size(); ++j){
+                    char c = curWord[j];
+                    if(curNode->children.count(c) == 0) break;
+                    for(auto p : curNode->children){
+                        char newChar = p.first;
+                        if(newChar == c) continue;
+                        curWord[j] = newChar;
+                        if(curWord == endWord) return len + 1;
+                        if(!visited.count(curWord) && wordList.count(curWord)){
+                            visited.insert(curWord);
+                            que.push(curWord);
+                        }
+                    }
+                    curWord[j] = c;
+                    curNode = curNode->children[c];
+                }
+            }
+            ++len;
+        }
+        
+        return 0;
+    }
+private:
+    TrieNode* buildTrie(unordered_set<string> &wordList){
+        TrieNode *root = new TrieNode();
+        for(string word : wordList){
+            TrieNode *cur = root;
+            for(char c : word){
+                if(cur->children.count(c) == 0){
+                    cur->children[c] = new TrieNode();
+                }
+                cur = cur->children[c];
+            }
+        }
+        
+        return root;
+    }
+};

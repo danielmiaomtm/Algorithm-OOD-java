@@ -24,6 +24,33 @@
     helper(root.left, k, count, result);
   }
 
+int count = 0;
+	  Node result = null;
+	  public int kthLargest(Node root, int k) {
+		    if (root == null) {
+		      return -1;
+		    }
+//		    int count = 0;
+		    helper(root, k);
+		    return result.val;
+		  }
+		  public void helper (Node root, int k) {
+		    if (root == null || count > k) {
+		      return;
+		    }
+		    //go right first
+		    helper (root.right, k);
+		    //update count
+		    count++;
+		    if (count == k) {
+		      result = root;	
+		      System.out.println(result.val   + "  result.val");
+		      return;
+		    }
+		    
+		    helper(root.left, k);
+		  }
+
 
 
 // kth smallest in BST

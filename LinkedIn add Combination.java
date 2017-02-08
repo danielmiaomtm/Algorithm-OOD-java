@@ -19,7 +19,41 @@
 	    
         
 	  }
+	
+
+//method 1: the same as fractor combinations		  
+	   public List<List<Integer>> getFactors(int n) {
+			List<List<Integer>> rs = new ArrayList<>();
+			List<Integer> temp = new ArrayList<>();
+			helper(rs, temp, n, 1);
+			return rs;
+		}
+		
+		public void helper(List<List<Integer>> res, List<Integer> temp, int num, int index) {
+			
+			for (int i = index; i <= num / 2; i++) {
+				if (num - i >= 0 && num - i <= num) {
+					temp.add(i);
+					temp.add(num - i);
+					res.add(new ArrayList<>(temp));
+					temp.remove(temp.size() - 1);
+					helper(res, temp, num - i, i);
+					temp.remove(temp.size() - 1);
+				}
+			}
+		}
 	  
+
+
+
+
+
+
+
+
+
+// method 2;
+
 	  public static List<List<Integer>> get(int x) {
 			List<List<Integer>> rs = new ArrayList<>();
 			List<Integer> temp = new ArrayList<>();

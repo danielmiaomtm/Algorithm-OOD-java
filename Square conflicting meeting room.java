@@ -55,7 +55,8 @@ class Solution {
     // conflicts list
     List<Node> list = new ArrayList<>();
     // position record
-    List<Integer> pos = new ArrayList<>();
+    int lastPos = -1;
+    //List<Integer> pos = new ArrayList<>();
     
     
     while (!heap.isEmpty()) {
@@ -65,7 +66,7 @@ class Solution {
       if (cur.pos == 0) {
         // if there is more than 1 meetings get the conflicts
         if (list.size() >= 2) {
-          result.add(new conflicts(pos.get(pos.size() - 1), cur.time, new ArrayList<>(list)));
+          result.add(new conflicts(lastPos, cur.time, new ArrayList<>(list)));
         }
         
         list.add(cur);
@@ -73,7 +74,7 @@ class Solution {
       } else {
         // if it is a end time pos
         if (list.size() >= 2) {
-          result.add(new conflicts(pos.get(pos.size() - 1), cur.time, new ArrayList<>(list)));
+          result.add(new conflicts(lastPos, cur.time, new ArrayList<>(list)));
         }
         
         // since it meets endTime, remove the meetings in list
@@ -85,8 +86,8 @@ class Solution {
         }
                 
       }
-      
-      pos.add(cur.time);
+      lastPos = cur.time;
+      //pos.add(cur.time);
           
     }
     return result;
@@ -115,4 +116,6 @@ class Solution {
   
   
 }
+
+
 

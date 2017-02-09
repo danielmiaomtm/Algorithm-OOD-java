@@ -59,7 +59,7 @@ public class practise {
 				return;
 			}
 	 
-			sb.append(root.val.length()).append("*").append(root.val).append("#");
+			sb.append(root.val.length()).append("*").append(root.val);
 			for(Node node : root.children){
 				serializeRecursive(node, sb);
 			}
@@ -92,7 +92,7 @@ public class practise {
 		    	if (input.charAt(index) == ')') {
 		    		index++;
 		    	} else {
-		    		index = pos + count + 2;
+		    		index = pos + count + 1;
 		    	}
 
 		    	

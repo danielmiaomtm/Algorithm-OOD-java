@@ -27,19 +27,20 @@ public class practise {
 	  
 	  public static List<String> decode (List<String> strs, String input) {
 		  List<String> result = new ArrayList<>();
-		  helper(result, strs, input, 0, 0, "");
+		  helper(result, strs, input, 0, "");
 		  return result;
 	  }
-	  public static void helper (List<String> result, List<String> strs, String input, int pre, int index, String str) {
+	  public static void helper (List<String> result, List<String> strs, String input, int index, String str) {
 		  if (index >= input.length()) {
 			  result.add(new String (str));
 			  return;
 		  }
 		  for (int i = index; i < input.length(); i++) {
-			  String cur = input.substring(pre, i + 1);
+			  String cur = input.substring(index, i + 1);
+			  // if exist in the map array
 			  for (int j = 0; j < strs.size(); j++) {
 				  if (strs.get(j).equals(cur)) {
-					  helper(result, strs, input, i + 1, i + 1, str + (char)('a' + j) + "");
+					  helper(result, strs, input, i + 1, str + (char)('a' + j) + "");
 				  } 
 			  }
 		  }

@@ -28,7 +28,7 @@ class Solution {
             D   E   F
           
     */
-    String[][] directory = new String[][]{{"A", "B"},{"A","C"},{"B","D"},                                             {"B","E"}, {"C", "F"}, {"C", "E"}, {"E", "A"}};
+    String[][] directory = new String[][]{{"A", "B"},{"A","C"},{"B","D"},{"B","E"}, {"C", "F"}, {"C", "E"}, {"E", "A"}};
     
     //System.out.println(sol.isConnected(directory, new String[]{"F", "D"}));
     System.out.println(sol.hasCycle(directory));

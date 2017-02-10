@@ -9,7 +9,16 @@ C gives 1 to B
 
 */
 
-
+class Transaction {
+	String payer;
+	List<String> payee;
+	int amount;
+	Transaction (String payer, List<String> payee, int amount) {
+		this.payer = payer;
+		this.payee = payee;
+		this.amount = amount;
+	}
+}
 public static void main (String[] args) {
   
     List<Transaction> input = new ArrayList<>();

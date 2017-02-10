@@ -87,23 +87,27 @@ class Solution {
           
          
           //left uncovered range
+          //1 & 2
           if (firstLeft && n.start < leftBound) {
             leftUncovered = new Node(n.start, leftBound, n.height);
             firstLeft = !firstLeft;
           } else if (firstLeft && leftBound < n.start) {
+          //3 & 4
             leftUncovered = new Node(leftBound,n.start, height);
             firstLeft = !firstLeft;
           } 
           
           //right uncovered range
+          //1 & 4
          if (n.start < rightBound && rightBound < n.end && n.end > leftBound) {
             rightUncovered = new Node(rightBound, n.end, n.height);
+          // 2 & 3 
           } else if (n.start < rightBound && rightBound > n.end && n.end > leftBound) {
             rightUncovered = new Node(n.end, rightBound, height);
           } 
 
-          //   cur      |____|
-          //    n |_____|    |____|
+          //   cur       |____|
+          //    n |______|    |____|
           
           // update height if there exist covered not hit the the same edge
           if (n.end != leftBound && n.start != rightBound) {
@@ -116,7 +120,7 @@ class Solution {
         }
       
     }
-    
+    // add the covered area
     nextList.add(new Node(leftBound, rightBound, curHeight));
     if (leftUncovered != null) {
       nextList.add(leftUncovered);

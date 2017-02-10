@@ -37,6 +37,7 @@ public class practise {
 		  }
 		  for (int i = index; i < input.length(); i++) {
 			  String cur = input.substring(index, i + 1);
+			  //这里可以优化，算出map array里面最大的manLen，如果现在的这个len超过这个maxLen，那就跳过	 		
 			  // if exist in the map array
 			  for (int j = 0; j < strs.size(); j++) {
 				  if (strs.get(j).equals(cur)) {

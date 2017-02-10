@@ -129,6 +129,7 @@ class Solution {
       nextList.add(rightUncovered);
     }
    
+    
     // System.out.println("*************");
     for (Node n : nextList) {
         // System.out.println("leftBound   " + leftBound);

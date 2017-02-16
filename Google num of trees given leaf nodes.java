@@ -11,14 +11,14 @@
 			res.add(new Node());
 			return res; 
 		} 
-		for (int i = 1; i < n; i += 1) { 
+		for (int i = 1; i < n; i++) { 
 			List<Node> leftNodes = generateFullBinaryTree(i); 
 			List<Node> rightNodes = generateFullBinaryTree(n - i); 
-			for (Node l : leftNodes) { 
-				for (Node r : rightNodes) { 
+			for (Node left : leftNodes) { 
+				for (Node right : rightNodes) { 
 					Node root = new Node(); 
-					root.left = l; 
-					root.right = r; 
+					root.left = left; 
+					root.right = rright; 
 					res.add(root); 
 				} 
 			} 

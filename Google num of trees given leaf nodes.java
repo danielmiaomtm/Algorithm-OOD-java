@@ -1,6 +1,6 @@
-	
-  //给定leaf的数量，判断一共有几种树可以构造
-  
+/*	
+然后问了 full binary tree （每个node 要么有两个child要么没有）的问题，求给定leaf node数量，生成所有可能的树的结构。
+ */ 
   public List<Node> generateFullBinaryTree(int n) { 
 		List<Node> res = new ArrayList<>(); 
 		if (n == 0) {

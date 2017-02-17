@@ -7,39 +7,55 @@
   */
   
   
-  int maxCount = 0;
-	public int findMax (int m, int n, String[] inputs) {
-		Arrays.sort(inputs, new Comparator<String>() {
-			public int compare (String str1, String str2) {
-				return str1.length() - str2.length();
-			}
-		});
-		
-		helper(m, n, inputs, 0, 0, 0);
-		
-		return maxCount;
-	}
-	public void helper (int m, int n, String[] inputs, int count, int totalLen, int index) {
-		
-		if (totalLen > m + n) {
-			return;
-		}
-		for (int i = index; i < inputs.length; i++) {
-			int zero = 0;
-			int ones = 0;
-			for (int j = 0; j < inputs[i].length(); j++) {
-				char c = inputs[i].charAt(j);
-				if (c == '1') {
-					ones++;
-				} else {
-					zero++;
-				}
-			}
-			if (m - zero < 0 || n - ones < 0) {
-				continue;
-			}
-			maxCount = Math.max(maxCount, count + 1);
-			helper(m - zero, n - ones, inputs, count + 1, totalLen + inputs[i].length(), i + 1);
-		}
-	}
+int maxCount = 0;
+List<String> ll = new ArrayList<>();
 
+public int findMax (int m, int n, String[] inputs) {
+	Arrays.sort(inputs, new Comparator<String>() {
+		public int compare (String str1, String str2) {
+			return str1.length() - str2.length();
+		}
+	});
+	List<String> result = new ArrayList<>();
+	boolean[] visited = new boolean[inputs.length];
+	helper(result, visited, m, n, inputs, 0, 0);
+	System.out.println(Arrays.toString(ll.toArray()));
+	return maxCount;
+}
+public void helper (List<String> result, boolean[] visited, int m, int n, String[] inputs, int count, int totalLen) {
+
+
+	for (int i = 0; i < inputs.length; i++) {
+		if (visited[i]) {
+			continue;
+		}
+		int zero = 0;
+		int ones = 0;
+		for (int j = 0; j < inputs[i].length(); j++) {
+			char c = inputs[i].charAt(j);
+			if (c == '1') {
+				ones++;
+			} else {
+				zero++;
+			}
+		}
+		if (m - zero < 0 || n - ones < 0) {
+			continue;
+		}
+		if (count + 1 > maxCount) {
+			maxCount = count + 1;
+			ll.clear();
+			result.add(inputs[i]);
+			ll.addAll(new ArrayList<>(result));
+			result.remove(result.size() - 1);
+		}
+
+
+		maxCount = Math.max(maxCount, count + 1);
+		visited[i] = true;
+		result.add(inputs[i]);
+		helper(result, visited, m - zero, n - ones, inputs, count + 1, totalLen + inputs[i].length());
+		visited[i] = false;
+		result.remove(result.size() - 1);
+	}
+}

@@ -6,40 +6,29 @@ Find all strobogrammatic numbers that are of length = n.
 For example, Given n = 2, return ["11","69","88","96"].
 */    
     
-    char[] table = {'0', '1', '8', '6', '9'};
-    List<String> res;
-    
-    public List<String> findStrobogrammatic(int n) {
-        res = new ArrayList<String>();
-        build(n, "");
-        return res;
+   public List<String> findStrobogrammatic(int n) {
+        return helper(n , n);
     }
-    
-    public void build(int n, String tmp){
-        if(n == tmp.length()){
-            res.add(tmp);
-            return;
+    public List<String> helper (int n, int m) {
+        if (n == 0) {
+            return new ArrayList<String>(Arrays.asList(""));
         }
-        boolean last = n - tmp.length() == 1;
-        for(int i = 0; i < table.length; i++){
-            char c = table[i];
-            // words cannot start with '0'&& if last, the mid char cannot be '6' || '9'
-            if((n != 1 && tmp.length() == 0 && c == '0') || (last && (c == '6' || c == '9'))){
-                continue;
+        if (n == 1) {
+            return new ArrayList<String>(Arrays.asList("0", "1", "8"));
+        }
+        List<String> list = helper(n - 2, m);
+        List<String> result = new ArrayList<>();
+        
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i);
+            if (n != m) {
+                result.add("0" + s + "0");
             }
-            StringBuilder newTmp = new StringBuilder(tmp);
-           
-            append(last, c, newTmp);
-            build(n, newTmp.toString());
+            result.add("1" + s + "1");
+            result.add("6" + s + "9");
+            result.add("8" + s + "8");
+            result.add("9" + s + "6");
+            
         }
-    }
-    
-    public void append(boolean last, char c, StringBuilder sb){
-        if(c == '6'){
-            sb.insert(sb.length()/2, "69");
-        } else if(c == '9'){
-            sb.insert(sb.length()/2, "96");
-        } else {
-            sb.insert(sb.length()/2, last ? c : ""+c+c);
-        }
+        return result;
     }

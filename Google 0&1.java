@@ -59,3 +59,34 @@ public void helper (List<String> result, boolean[] visited, int m, int n, String
 		result.remove(result.size() - 1);
 	}
 }
+
+
+
+
+
+
+//dp
+
+public int findMaxForm (int m, int n, String[] strs) {
+
+	int[][] dp = new int[m + 1][n + 1];
+
+	for (String s : strs) {
+		int[] cost = count(s);
+		for (int i = m; i >= cost[0]; i--) {
+			for (int j = n; j >= cost[1]; j--) {
+				dp[i][j] = Math.max(dp[i][j], dp[i - cost[0]][j - cost[1]] + 1);
+			}
+		}
+
+	}
+	return dp[m][n];
+}
+
+public int[] count (String str) {
+	int[] cost = new int[2];
+	for (int i = 0; i < str.length(); i++) {
+		cost[str.charAt(i) - '0']++;
+	}
+	return cost;
+}

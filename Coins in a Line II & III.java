@@ -64,3 +64,76 @@ public boolean firstWillWin(int[] values) {
         //compare your final value to the other player's
         return dp[0] > sum - dp[0];
     }
+
+
+
+
+
+
+/*
+There are n coins in a line. Two players take turns to take a coin from one of the ends of the line until there are no more coins left. 
+The player with the larger amount of money wins.
+Could you please decide the first player will win or lose?
+Example
+Given array A = [3,2,2], return true.
+Given array A = [1,2,4], return true.
+Given array A = [1,20,4], return false.
+Challenge
+Follow Up Question:
+If n is even. Is there any hacky algorithm that can decide whether first player will win or lose in O(1) memory and O(n) time?
+*/
+
+
+
+/*
+用memory search的方法解，和II类似。dp[i][j]表示在i－j区间里我们能取到的最大值。
+我们每次能取的的值为开头或者结尾元素，因此我们在i－j区间能取的最大值为：i－j区间元素的总和－对手在剩下区间能取到的元素的总和的较小值。
+因此，状态函数为：
+dp[i][j] = sum[i][j] - min(dp[i+1][j], dp[i][j-1])。
+*/
+
+
+public class Solution {
+    /**
+     * @param values: an array of integers
+     * @return: a boolean which equals to true if the first player will win
+     */
+    public boolean firstWillWin(int[] values) {
+        // write your code here
+        if(values == null || values.length == 0){
+            return false;
+        }
+
+        int n = values.length;
+        int[] sum = new int[n + 1];
+        sum[0] = 0;
+        for(int i = 1; i <= n; i++){
+            sum[i] = sum[i - 1] + values[i - 1];
+        }
+        int[][] dp = new int[n + 1][n + 1];
+        boolean[][] visit = new boolean[n + 1][n + 1];
+
+        return search(1, n, sum, dp, visit) > sum[n] / 2;
+    }
+
+    private int search(int start, int end, int[] sum, int[][] dp, boolean[][] visit){
+        if(visit[start][end]){
+            return dp[start][end];
+        }
+
+        if(start == end){
+            visit[start][end] = true;
+            return dp[start][end] = sum[end] - sum[start - 1];
+        }
+
+        int max = (sum[end] - sum[start - 1]) - Math.min(search(start, end - 1, sum, dp, visit), search(start + 1, end, sum, dp, visit));
+
+        visit[start][end] = true;
+        dp[start][end] = max;
+        return dp[start][end];
+    }
+}
+
+
+
+

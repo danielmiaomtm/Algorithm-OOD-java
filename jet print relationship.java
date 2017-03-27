@@ -58,32 +58,36 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 	}
 	
 	
-	
+	//
 	public static Map<String, Integer> otherDep (String[] employeeInput, String[] friendsInput) {
 		Map<String, Set<String>> friendsMap = findFriend(employeeInput, friendsInput);
-		Map<String, Integer> result = new HashMap<>();
-
-		Map<String, Set<String>> depFriendList = new HashMap<>();
-		Map<String, String> empToDep = new HashMap<>();
-
+		
+		//key: department value: list of empolyee
+		Map<String, Set<String>> depEmpMap = new HashMap<>();
+		//key: id value:department
+		Map<String, String> idToDep = new HashMap<>();
+		// store <dep, List<id>>, friendList
+		
 		for (String emp : employeeInput) {
 			String[] temp = emp.split(",");
-			empToDep.put(temp[0], temp[2]);
-			if (!depFriendList.containsKey(temp[2])) {
+			idToDep.put(temp[0], temp[2]);
+			if (!depEmpMap.containsKey(temp[2])) {
 				Set<String> set = new HashSet<>();
 				set.add(temp[0]);
-				depFriendList.put(temp[2], set);
+				depEmpMap.put(temp[2], set);
 			} else {
-				depFriendList.get(temp[2]).add(temp[0]);
+				depEmpMap.get(temp[2]).add(temp[0]);
 			}
 		}
-
-		for (String dep : depFriendList.keySet()) {
+		
+		Map<String, Integer> result = new HashMap<>();
+		//iterate the depEmp map, and then check in the frindlist with department
+		for (String dep : depEmpMap.keySet()) {
 			int num = 0;	
-			for (String emp : depFriendList.get(dep)) {
+			for (String emp : depEmpMap.get(dep)) {
 				Set<String> frinds = friendsMap.get(emp);
 				for (String friend : frinds) {
-					if (!empToDep.get(friend).equals(dep)) {
+					if (!idToDep.get(friend).equals(dep)) {
 						num++;
 						break;
 					}
@@ -94,6 +98,8 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 		return result;
 	}
 
+	
+	
 	// first question	
 	public static Map<String, Set<String>> findFriend (String[] employeeInput, String[] friendsInput) {
 
@@ -120,7 +126,5 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 
 	}
 	
-	
 }
-
 

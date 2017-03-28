@@ -43,7 +43,6 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 		return true;
 	}
 
-
 	public static void helper (Map<String, Boolean> visited, String emp, Map<String, Set<String>> friendsMap) {
 		Set<String> friends = friendsMap.get(emp);
 		visited.put(emp, true);
@@ -58,51 +57,75 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 	}
 	
 	
-	//
-	public static Map<String, Integer> otherDep (String[] employeeInput, String[] friendsInput) {
-		Map<String, Set<String>> friendsMap = findFriend(employeeInput, friendsInput);
-		
-		//key: department value: list of empolyee
-		Map<String, Set<String>> depEmpMap = new HashMap<>();
-		//key: id value:department
-		Map<String, String> idToDep = new HashMap<>();
-		// store <dep, List<id>>, friendList
+//find the number of employee in each department whoes friends are in other departments [Eng: 0 of 2, HR: 1 of 2, Design: 1 of 1]
+	public static List<String> otherDep (String[] employeeInput, String[] friendsInput) {
+		List<String> result = new ArrayList<>();
+		//fiend the friendList key : id, val, set of department
+		Map<String, Set<String>> friendsMap = new HashMap<>();	
+		// key : id, val : department
+		Map<String, String> idToDepMap = new HashMap<>();
+		//key:department, val: list of id
+		Map<String, List<String>> depToIdMap = new HashMap<>();
 		
 		for (String emp : employeeInput) {
+			//set friendsMap
 			String[] temp = emp.split(",");
-			idToDep.put(temp[0], temp[2]);
-			if (!depEmpMap.containsKey(temp[2])) {
-				Set<String> set = new HashSet<>();
-				set.add(temp[0]);
-				depEmpMap.put(temp[2], set);
+			Set<String> set = new HashSet<>();
+			friendsMap.put(temp[0], set);
+			//set idToDepMap
+			idToDepMap.put(temp[0], temp[2]);
+			// set depToIdMap
+			List<String> list;
+			if (!depToIdMap.containsKey(temp[2])) {
+				list = new ArrayList<>();
 			} else {
-				depEmpMap.get(temp[2]).add(temp[0]);
+				list = depToIdMap.get(temp[2]);
 			}
+			list.add(temp[0]);
+			depToIdMap.put(temp[2], list);
+		} 
+		
+		for (String friends : friendsInput) {
+			String[] temp = friends.split(",");
+			friendsMap.get(temp[0]).add(temp[1]);
+			friendsMap.get(temp[1]).add(temp[0]);
 		}
 		
-		Map<String, Integer> result = new HashMap<>();
-		//iterate the depEmp map, and then check in the frindlist with department
-		for (String dep : depEmpMap.keySet()) {
-			int num = 0;	
-			for (String emp : depEmpMap.get(dep)) {
-				Set<String> frinds = friendsMap.get(emp);
-				for (String friend : frinds) {
-					if (!idToDep.get(friend).equals(dep)) {
-						num++;
+		for (String key : depToIdMap.keySet()) {
+			System.out.println("id " + key);
+			System.out.println(Arrays.toString(depToIdMap.get(key).toArray()));	
+		}
+		
+		// iterate depToIdMap and find the number of employee whoes friends are in other departments
+		for (String department :depToIdMap.keySet()) {
+			String temp = department + ": ";
+			//employee whoes friends are in other dpeartments
+			int count = 0;
+			for (String employee : depToIdMap.get(department)) {
+				if (friendsMap.get(employee).size() == 0) {
+					break;
+				}
+				for (String friend: friendsMap.get(employee)) {
+					
+					if (!idToDepMap.get(friend).equals(department)) {
+						count++;
 						break;
 					}
-				}
+				}				
 			}
-			result.put(dep, num);
-		}	
+			temp += count + " of " + String.valueOf(depToIdMap.get(department).size());
+			result.add(temp);
+		}
+		
 		return result;
 	}
 
 	
 	
-	// first question	
-	public static Map<String, Set<String>> findFriend (String[] employeeInput, String[] friendsInput) {
+	//find friends list: [3:1,4, 2:1,4, 1:3,2, 5:null, 4:3,2]	
+	public static List<String> findFriend (String[] employeeInput, String[] friendsInput) {
 
+		List<String> result = new ArrayList<>();
 		Map<String, Set<String>> friendsMap = new HashMap<>();
 
 		for (String emp : employeeInput) {
@@ -119,12 +142,25 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 			if (!friendsMap.get(fri[1]).contains(fri[0])) {
 				friendsMap.get(fri[1]).add(fri[0]);
 			}
-
 		}
+		for (String emp : friendsMap.keySet()) {
+			String temp = emp + ":";
 
-		return friendsMap;
-
+			if (friendsMap.get(emp).size() == 0) {
+				temp += "null";
+				result.add(temp);
+			} else {
+				for (String e : friendsMap.get(emp)) {
+					temp += e + ",";
+				}
+				result.add(temp.substring(0, temp.length() - 1));
+			}
+		}
+		return result;
 	}
+	
+	
+	
 	
 }
 

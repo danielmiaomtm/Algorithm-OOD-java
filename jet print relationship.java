@@ -61,17 +61,13 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 	public static List<String> otherDep (String[] employeeInput, String[] friendsInput) {
 		List<String> result = new ArrayList<>();
 		//fiend the friendList key : id, val, set of department
-		Map<String, Set<String>> friendsMap = new HashMap<>();	
+		Map<String, Set<String>> friendsMap = findFriend(employeeInput, friendsInput);;	
 		// key : id, val : department
 		Map<String, String> idToDepMap = new HashMap<>();
 		//key:department, val: list of id
 		Map<String, List<String>> depToIdMap = new HashMap<>();
 		
 		for (String emp : employeeInput) {
-			//set friendsMap
-			String[] temp = emp.split(",");
-			Set<String> set = new HashSet<>();
-			friendsMap.put(temp[0], set);
 			//set idToDepMap
 			idToDepMap.put(temp[0], temp[2]);
 			// set depToIdMap
@@ -84,12 +80,6 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 			list.add(temp[0]);
 			depToIdMap.put(temp[2], list);
 		} 
-		
-		for (String friends : friendsInput) {
-			String[] temp = friends.split(",");
-			friendsMap.get(temp[0]).add(temp[1]);
-			friendsMap.get(temp[1]).add(temp[0]);
-		}
 		
 		for (String key : depToIdMap.keySet()) {
 			System.out.println("id " + key);
@@ -123,26 +113,11 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 	
 	
 	//find friends list: [3:1,4, 2:1,4, 1:3,2, 5:null, 4:3,2]	
-	public static List<String> findFriend (String[] employeeInput, String[] friendsInput) {
+	public static List<String> findFriendsList (String[] employeeInput, String[] friendsInput) {
 
 		List<String> result = new ArrayList<>();
-		Map<String, Set<String>> friendsMap = new HashMap<>();
-
-		for (String emp : employeeInput) {
-			String[] temp = emp.split(",");
-			Set<String> set = new HashSet<>();
-			friendsMap.put(temp[0], set);
-		}
-
-		for (String friends : friendsInput) {
-			String[] fri = friends.split(",");
-			if (!friendsMap.get(fri[0]).contains(fri[1])) {
-				friendsMap.get(fri[0]).add(fri[1]);
-			}
-			if (!friendsMap.get(fri[1]).contains(fri[0])) {
-				friendsMap.get(fri[1]).add(fri[0]);
-			}
-		}
+		Map<String, Set<String>> friendsMap = findFriend(employeeInput, friendsInput);
+	
 		for (String emp : friendsMap.keySet()) {
 			String temp = emp + ":";
 
@@ -159,8 +134,25 @@ String[] employeeInput = new String[]{"1,Alice,HR", "2,Bob,Engineer", "3,Daniel,
 		return result;
 	}
 	
-	
-	
+	//frindList helper funciton
+	public static Map<String, List<String>> findFriend (String[] employeeInput, String[] friendsInput) {
+		Map<String, Set<String>> map = new HashMap<>();
+
+		for (String emp : employeeInput) {
+			String[] temp = emp.split(",");
+			Set<String> set = new HashSet<>();
+			map.put(temp[0], set);		
+		}
+
+		for (String friends : friendsInput) {
+			String[] fri = friends.split(",");			
+			map.get(fri[0]).add(fri[1]);
+			map.get(fri[1]).add(fri[0]);
+			
+						
+		}
+		return map;
+	}
 	
 }
 

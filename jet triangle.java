@@ -19,27 +19,16 @@ class Solution {
 		    
 		    List<Node> result = new ArrayList<>();
 		    int rowNum = matrix.length, colNum = matrix[0].length;
-		    boolean[][] visited = new boolean[rowNum][colNum];
-		    
+		   
 		    for (int i = 0; i < rowNum; i++) {
 		      for (int j = 0; j < colNum; j++) {
-		        if (!visited[i][j] && matrix[i][j] == 0) {
+		        if (matrix[i][j] == 0) {
 
 		          Node node = helper(matrix, i, j, rowNum, colNum);
-		          result.add(node);
-		          
-		          for (int a = node.top; a < node.top + node.height; a++) {
-		        	  for (int b = node.left; b < node.left + node.width; b++) {
-		        		  visited[a][b] = true;
-		        	  }
-		          }
-		          
+		          result.add(node);  
 		        }
-		        
 		      }
 		    }
-		  
-		  
 		  return result;
 		} 
 	  

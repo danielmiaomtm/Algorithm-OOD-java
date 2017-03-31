@@ -15,36 +15,39 @@ class Solution {
   }
   
 	  
-	  public List<Node> triPos (int[][] matrix) {
-		    
-		    List<Node> result = new ArrayList<>();
+	 
+	  public List<Integer> triPos2 (int[][] matrix) {
+		   
+		  //top left width height
+		  	List<Integer> result = new ArrayList<>();
+		  	
 		    int rowNum = matrix.length, colNum = matrix[0].length;
 		   
 		    for (int i = 0; i < rowNum; i++) {
 		      for (int j = 0; j < colNum; j++) {
 		        if (matrix[i][j] == 0) {
-
-		          Node node = helper(matrix, i, j, rowNum, colNum);
-		          result.add(node);  
+		         helper(result, matrix, i, j, rowNum, colNum);
+		         return result;
 		        }
 		      }
 		    }
+		    
 		  return result;
 		} 
 	  
 	  
 	  
 	//只有一个矩阵的话，可以用binary search，因为是连续的，但是如果是多个的话，只能两边走  
-	public Node helper (int[][] matrix, int row, int col, int rowNum, int colNum) {
+	public void helper (List<Integer> result, int[][] matrix, int row, int col, int rowNum, int colNum) {
 	   
 	    // go to right, find width
 		
 		int width = binarySearch(matrix, row, col, true);		
 		int height = binarySearch(matrix, row, col, false);
-
-		return new Node(row, col, width - col + 1, height - row + 1);
-	    
-	    
+		result.add(row);
+		result.add(col);
+		result.add(width - col + 1);
+		result.add(height - row + 1);
 	}
 	//binary search找到边界位置
 	public int binarySearch (int[][] matrix, int row, int col, boolean findWidth) {

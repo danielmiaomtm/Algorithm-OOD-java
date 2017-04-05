@@ -1,3 +1,4 @@
+/*
 Find longest palindrome subsequence
 
 input: abda
@@ -8,6 +9,8 @@ output : aba|ada
   1   1 1 1
   2     1 1
   3       1
+
+*/
 
 
 public int longestPalindromeSubsequence (String string) {

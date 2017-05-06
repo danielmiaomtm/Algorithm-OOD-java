@@ -1,5 +1,5 @@
 /*
-给一排房子，用RGB三种颜色染色，相邻不能染成同色，每个房子染对应颜色会有对应的weight（W[N][3]），求最大的weight和
+给一排房子，用RGB三种颜色染色，相邻不能染成同色，每个房子染对应颜色会有对应的weight（W[N][3]），求最小的weight和
 */
 
 public int minCost(int[][] costs) {

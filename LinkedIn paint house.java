@@ -41,6 +41,11 @@ public int minCost (int[][] costs) {
       prevSec = currSec;
       prevIdx = currIdx;
   }
-  return prevMin;
+  int result = Integer.MAX_VALUE;
+  for (int j = 0; j < colNum; j++) {
+    result = Math.min(result, costs[rowNum - 1][j]);
+  }
+  return result;
+    
   
 }

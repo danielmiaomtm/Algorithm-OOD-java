@@ -60,27 +60,27 @@ public midStack {
 	}
 	
  
-	public int pop () {
-	     if (head == null) {
-	      return -1;
-	     }
-	     int result = head.val;
-	     DLLNode pre = head.pre;
-	     //only one node exists
-	     if (pre == null) {
-	      head = null;
-	      middle = null;
-	      return result;
-	     } 
-	     // when size is odd, middle shift to left
-	     head = pre;
-	     head.next = null;
-	     if (size % 2 != 0) {
-	      middle = middle.pre;
-	     }
-	     size--;
-	     return result;
-	}
+public int pop () {
+     if (head == null) {
+      return -1;
+     }
+     int result = head.val;
+     DLLNode pre = head.pre;
+     //only one node exists
+     if (pre == null) {
+      head = null;
+      middle = null;
+      return result;
+     } 
+     // when size is odd, middle shift to left
+     head = pre;
+     head.next = null;
+     if (size % 2 != 0) {
+      middle = middle.pre;
+     }
+     size--;
+     return result;
+}
  
  
  public int findMid () {
@@ -105,6 +105,7 @@ public int popMid () {
 
      middle.pre.next = middle.next;
      middle.next.pre = middle.pre;
+     //奇数左移，偶数右移
      if (size % 2 != 0) {
       middle = middle.pre;
      } else {

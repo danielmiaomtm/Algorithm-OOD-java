@@ -18,27 +18,33 @@ The output should be:
 */	 
    
    
-   public List<List<Integer>> print (int[][] matrix) {
-		    List<List<Integer>> result = new ArrayList<>();
-		  	int rowNum = matrix.length;
-		    int colNum = matrix[0].length;
-		    
-		    for (int i = rowNum - 1; i >= 0; i--) {
-		      int j = 0;
-		      List<Integer> list = new ArrayList<>();
-		      for (int x = i; j < colNum && x < rowNum; x++, j++) {
-		    	 list.add(matrix[x][j]);
-		      }
-		      result.add(list);
-		    }
-		    
-		    for (int j = 1; j < colNum; j++) {
-		      int x = 0;
-		      List<Integer> list = new ArrayList<>();
-		      for (int y = j; x < rowNum && y < colNum; y++, x++) {
-		    	  list.add(matrix[x][y]);
-		      }
-		      result.add(list);
-		    }
-		    return result;
-		  }
+ public List<List<Integer>> print (int[][] matrix) {
+    List<List<Integer>> result = new ArrayList<>();
+    int rowNum = matrix.length;
+    int colNum = matrix[0].length;
+	 
+    int row = rowNum - 1, col = 0;
+    for (int r = row; i >= 0; i--) {
+      int c = col;
+      List<Integer> list = new ArrayList<>();
+      while (r < rowNum && c < colNum) {
+	  list.add(matrix[r][c]);
+	  r++;
+	  c++;
+      }
+      result.add(list);
+    }
+    
+    row = 0, col = 1;
+    for (int c = col; c < colNum; c++) {
+      int r = row;
+      List<Integer> list = new ArrayList<>();
+      while (r < rowNum && c < colNum) {
+	  list.add(matrix[x][y]);
+	  r++;
+	  c++;
+      }
+      result.add(list);
+    }
+    return result;
+ }

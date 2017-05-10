@@ -1,3 +1,8 @@
+
+//从右往左，如果碰到递增的，那就累加，递减的话就减
+
+
+
 public String intToRoman(int num) {
         if (num <= 0) {
             return "";

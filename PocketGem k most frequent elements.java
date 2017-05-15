@@ -28,7 +28,7 @@ public List<Integer> topKFrequent(int[] nums, int k) {
 }
 
 
-
+//heap
 public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){

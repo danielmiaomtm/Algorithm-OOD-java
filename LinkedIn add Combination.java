@@ -76,3 +76,34 @@
 				temp.remove(temp.size() - 1);
 			}
 		}
+
+
+
+
+//method 3 从大到小排列
+
+	public List<List<Integer>> pa (int input) {
+		
+		List<List<Integer>> result = new ArrayList<>();
+		List<Integer> list = new ArrayList<>();
+		helper(result, list, input, input);
+		return result;
+	}
+	public void helper (List<List<Integer>>result, List<Integer> list, int cur, int index) {
+		if (cur < 0) {
+			return;
+		}
+		if (cur == 0) {
+			result.add(new ArrayList<>(list));
+			return;
+		}
+
+		for (int i = index; i >= 1; i--) {	
+			list.add(i);				
+			helper(result, list, cur - i, i);
+			list.remove(list.size() - 1);
+			
+		}	
+	
+	}
+

@@ -10,20 +10,20 @@
  *     Point(int a, int b) { x = a; y = b; }
  * }
  */
-public class Solution {
-    public int maxPoints(Point[] points) {
+public int maxPoints(Point[] points) {
         if (points.length <= 1)
             return points.length;
         int maxUniv = Integer.MIN_VALUE;
         for (int i = 0; i < points.length; i++) {
             Point cur = points[i];
             HashMap<String, Integer> map = new HashMap<String, Integer>();
-            int same = 1, maxLocal = 0;
+            int howManyCur = 1, maxLocal = 0;
             for (int j = i + 1; j < points.length; j++) {   //这里可以从i+1开始，之前的都算过了
                     Point iter = points[j];
                     if (iter.x == cur.x && iter.y == cur.y) {//同一顶点
                         howManyCur += 1;
-                    } else {          //不同顶点
+                    } 
+                    else {          //不同顶点
                         String key = getSlopeInString(cur, iter);
                         //map里存(过cur点,斜率key)代表的直线有多少除了cur的点
                         map.put(key, map.containsKey(key) ? map.get(key) + 1 : 1);
@@ -38,6 +38,12 @@ public class Solution {
     public String getSlopeInString(Point cur, Point iter) {
         int numerator = iter.y - cur.y;
         int denominator = iter.x - cur.x;
+        if (numerator == 0) {
+            return "0";
+        }
+        if (denominator == 0) {
+            return "INF";
+        }
         String sign = getSign(numerator, denominator);
         int gcd = gcd(Math.abs(numerator), Math.abs(denominator));//0和任意一个非零数'a'的gcd为'a',0和0的gcd为0,所以斜率为无穷的情况分母为0
         return sign + Math.abs(numerator)/gcd + "/" + Math.abs(denominator)/gcd;
@@ -55,5 +61,3 @@ public class Solution {
         else 
             return "-";
     }
-    
-}

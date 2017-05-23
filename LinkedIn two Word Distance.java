@@ -62,39 +62,31 @@ public class Solution {
 
 
 // if two words could be same， 两个词可以一样
-public class Solution {
-    public int shortestWordDistance(String[] words, String word1, String word2) {
-        boolean appeared = false;
-        int left = -1, right = -1, minLen = Integer.MAX_VALUE;
-        
-        for (int i = 0; i < words.length; i++) {
-            
-            if (word1.equals(word2)) {
-                if (words[i].equals(word1)) {
-                    if (appeared) {
-                        right = i;
-                    } else {
-                        left = i;
-                    }
-                    appeared = !appeared;
-                }
-            } else {
-                if (word1.equals(words[i])) {
-                    left = i;
-                } else if (word2.equals(words[i])) {
-                    right = i;
-                }
-            }
-            
-            if (left != -1 && right != -1) {
-                minLen = Math.min(minLen, Math.abs(right - left));
-            }
-        
+public int shortestWordDistance(String[] words, String word1, String word2) {
+        if (words == null || words.length == 0) {
+            return 0;
         }
+        boolean isSame = word1.equals(word2);
         
-        return minLen == Integer.MAX_VALUE ? -1 : minLen;
+        int pre = -1;
+        int minLen = words.length;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(word1) || words[i].equals(word2)) {
+                if (isSame) {
+                    if (pre >= 0) {
+                        minLen = Math.min(minLen, i - pre);
+                    }
+                    pre = i;
+                } else {
+                    if (pre >= 0 && !words[i].equals(words[pre])) {
+                        minLen = Math.min(minLen, i - pre);
+                    }
+                    pre = i;
+                }
+            }
+        }
+        return minLen;   
     }
-}
 
 
 public int shortestWordDistance(String[] words, String word1, String word2) {

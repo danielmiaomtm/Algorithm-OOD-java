@@ -4,11 +4,11 @@
 
 target = "czab"    dict : ["ab", "cab"]
 
-0 (c)  2  3   0  -1   1
-1 (z)  2  3  -1  -1   1
-2 (a)  2  3  -1  -1  -1
-3 (b) -1  3  -1  -1  -1
-       a  b   c   d   z
+0 (c)  2  3   0  -1  ...  1
+1 (z)  2  3  -1  -1  ...  1
+2 (a)  2  3  -1  -1  ... -1
+3 (b) -1  3  -1  -1  ... -1
+       a  b   c   d  ...  z
 */
 
 public int maxSubsequence (List<String> dict, String target) {
